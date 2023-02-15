@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Canvas2DNet", "Canvas2DNet\Canvas2DNet.csproj", "{53D2BBEC-F8B8-4F33-B31C-9BB3FAEA6568}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Canvas2DNet", "Canvas2DNet\Canvas2DNet.csproj", "{53D2BBEC-F8B8-4F33-B31C-9BB3FAEA6568}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Canvas2DNetTester", "Canvas2DNetTester\Canvas2DNetTester.csproj", "{ADD57953-5F4E-46B1-8BE2-B6F59469C0EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{53D2BBEC-F8B8-4F33-B31C-9BB3FAEA6568}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53D2BBEC-F8B8-4F33-B31C-9BB3FAEA6568}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53D2BBEC-F8B8-4F33-B31C-9BB3FAEA6568}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADD57953-5F4E-46B1-8BE2-B6F59469C0EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADD57953-5F4E-46B1-8BE2-B6F59469C0EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADD57953-5F4E-46B1-8BE2-B6F59469C0EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADD57953-5F4E-46B1-8BE2-B6F59469C0EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
