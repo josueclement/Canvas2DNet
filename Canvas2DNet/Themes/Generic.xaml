@@ -6,11 +6,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:Canvas2D}">
-                    <ItemsControl ItemsSource="{TemplateBinding Items}"
-                                      Background="{TemplateBinding Background}"
-                                      ClipToBounds="True"
-                                      ItemTemplateSelector="{TemplateBinding DrawingObjectsDataTemplateSelector}">
-
+                    <ItemsControl x:Name="PART_container"
+                                  ItemsSource="{TemplateBinding Items}"
+                                  ItemTemplateSelector="{TemplateBinding DrawingObjectsDataTemplateSelector}"
+                                  Background="{TemplateBinding Background}"
+                                  ClipToBounds="True">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas />
