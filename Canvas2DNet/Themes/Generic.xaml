@@ -52,6 +52,16 @@
                                          StrokeDashArray="{Binding StrokeDashArray}"
                                          Fill="{Binding Fill}" />
                             </DataTemplate>
+                            <DataTemplate DataType="{x:Type drawing:Canvas2DPath}">
+                                <Path Width="{Binding Width}"
+                                      Height="{Binding Height}"
+                                      Stroke="{Binding Stroke}"
+                                      StrokeThickness="{Binding StrokeThickness}"
+                                      StrokeDashArray="{Binding StrokeDashArray}"
+                                      StrokeMiterLimit="1"
+                                      Fill="{Binding Fill}"
+                                      Data="{Binding Data}" />
+                            </DataTemplate>
                         </ItemsControl.Resources>
                     </ItemsControl>
                 </ControlTemplate>
