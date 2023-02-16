@@ -3,17 +3,13 @@
                     xmlns:local="clr-namespace:Canvas2DNet"
                     xmlns:drawing="clr-namespace:Canvas2DNet.DrawingObjects">
     <Style TargetType="{x:Type local:Canvas2D}">
-        <!--<Setter Property="Background" Value="{Binding Background}" />-->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:Canvas2D}">
-                    <ControlTemplate.Resources>
-                        <local:DrawingObjectsDataTemplateSelector x:Key="DrawingObjectsDataTemplateSelector" />
-                    </ControlTemplate.Resources>
                     <ItemsControl ItemsSource="{TemplateBinding Items}"
                                       Background="{TemplateBinding Background}"
                                       ClipToBounds="True"
-                                      ItemTemplateSelector="{StaticResource DrawingObjectsDataTemplateSelector}">
+                                      ItemTemplateSelector="{TemplateBinding DrawingObjectsDataTemplateSelector}">
 
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>

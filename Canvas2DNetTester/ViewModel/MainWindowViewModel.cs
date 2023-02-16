@@ -11,6 +11,7 @@ namespace Canvas2DNetTester.ViewModel
     {
         public MainWindowViewModel()
         {
+            //DrawingObjectsDataTemplateSelector = new DrawingObjectsDataTemplateSelector();
             DrawingObjectsDataTemplateSelector.AddDataTemplate(typeof(TestObject), typeof(TestObjectView));
 
             MyItems.Add(new Canvas2DRectangle
@@ -32,5 +33,6 @@ namespace Canvas2DNetTester.ViewModel
         }
 
         public ObservableCollection<DrawingObject> MyItems { get; set; } = new ObservableCollection<DrawingObject>();
+        public DrawingObjectsDataTemplateSelector DrawingObjectsDataTemplateSelector { get; set; } = new DrawingObjectsDataTemplateSelector();
     }
 }

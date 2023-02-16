@@ -3,6 +3,9 @@ using System.Windows.Media;
 
 namespace Canvas2DNet.DrawingObjects
 {
+    /// <summary>
+    /// Base drawing object shape
+    /// </summary>
     public abstract class Canvas2DShape : DrawingObject
     {
         #region Properties

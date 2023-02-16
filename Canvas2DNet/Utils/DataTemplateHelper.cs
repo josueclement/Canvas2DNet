@@ -4,8 +4,17 @@ using System.Windows;
 
 namespace Canvas2DNet.Utils
 {
+    /// <summary>
+    /// Helper class for DataTemplates
+    /// </summary>
     public static class DataTemplateHelper
     {
+        /// <summary>
+        /// Create a DataTemplate based on the ViewModel type and the View type
+        /// </summary>
+        /// <param name="viewModelType">ViewModel type</param>
+        /// <param name="viewType">View type</param>
+        /// <returns>DataTemplate</returns>
         public static DataTemplate CreateDataTemplate(Type viewModelType, Type viewType)
         {
             const string xamlTemplate = "<DataTemplate DataType=\"{{x:Type vm:{0}}}\"><v:{1} /></DataTemplate>";

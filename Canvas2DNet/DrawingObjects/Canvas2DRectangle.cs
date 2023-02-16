@@ -1,5 +1,8 @@
 ﻿namespace Canvas2DNet.DrawingObjects
 {
+    /// <summary>
+    /// Rectangle drawing object
+    /// </summary>
     public class Canvas2DRectangle : Canvas2DShape
     {
         #region Properties
