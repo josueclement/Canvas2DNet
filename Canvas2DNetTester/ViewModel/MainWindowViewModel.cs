@@ -30,6 +30,14 @@ namespace Canvas2DNetTester.ViewModel
                 By = 30,
                 Stroke = new SolidColorBrush(Colors.Black)
             });
+            MyItems.Add(new Canvas2DEllipse
+            {
+                X = 130,
+                Y = 20,
+                Width = 40,
+                Height = 20,
+                Stroke = new SolidColorBrush(Colors.Black)
+            });
             MyItems.Add(new TestObject
             {
                 X = 300,

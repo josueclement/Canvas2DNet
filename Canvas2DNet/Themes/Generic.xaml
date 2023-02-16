@@ -44,6 +44,14 @@
                                       StrokeThickness="{Binding StrokeThickness}"
                                       StrokeDashArray="{Binding StrokeDashArray}"/>
                             </DataTemplate>
+                            <DataTemplate DataType="{x:Type drawing:Canvas2DEllipse}">
+                                <Ellipse Width="{Binding Width}"
+                                         Height="{Binding Height}"
+                                         Stroke="{Binding Stroke}"
+                                         StrokeThickness="{Binding StrokeThickness}"
+                                         StrokeDashArray="{Binding StrokeDashArray}"
+                                         Fill="{Binding Fill}" />
+                            </DataTemplate>
                         </ItemsControl.Resources>
                     </ItemsControl>
                 </ControlTemplate>
