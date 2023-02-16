@@ -35,6 +35,15 @@
                                            StrokeThickness="{Binding StrokeThickness}"
                                            StrokeDashArray="{Binding StrokeDashArray}" />
                             </DataTemplate>
+                            <DataTemplate DataType="{x:Type drawing:Canvas2DLine}">
+                                <Line X1="{Binding Ax}"
+                                      Y1="{Binding Ay}"
+                                      X2="{Binding Bx}"
+                                      Y2="{Binding By}"
+                                      Stroke="{Binding Stroke}"
+                                      StrokeThickness="{Binding StrokeThickness}"
+                                      StrokeDashArray="{Binding StrokeDashArray}"/>
+                            </DataTemplate>
                         </ItemsControl.Resources>
                     </ItemsControl>
                 </ControlTemplate>

@@ -22,10 +22,18 @@ namespace Canvas2DNetTester.ViewModel
                 Height = 100,
                 Fill = new SolidColorBrush(Colors.DeepSkyBlue)
             });
+            MyItems.Add(new Canvas2DLine
+            {
+                Ax = 20,
+                Ay = 20,
+                Bx = 100,
+                By = 30,
+                Stroke = new SolidColorBrush(Colors.Black)
+            });
             MyItems.Add(new TestObject
             {
-                X = 0,
-                Y = 0,
+                X = 300,
+                Y = 300,
                 Width = 100,
                 Height = 25,
                 Content = "Blah"
