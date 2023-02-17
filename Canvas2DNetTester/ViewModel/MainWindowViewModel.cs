@@ -12,7 +12,6 @@ namespace Canvas2DNetTester.ViewModel
     {
         public MainWindowViewModel()
         {
-            //DrawingObjectsDataTemplateSelector = new DrawingObjectsDataTemplateSelector();
             DrawingObjectsDataTemplateSelector.AddDataTemplate(typeof(TestObject), typeof(TestObjectView));
 
             MyItems.Add(new Canvas2DRectangle
@@ -70,7 +69,7 @@ namespace Canvas2DNetTester.ViewModel
                 ctx.BeginFigure(new Point(0, 0), true, false);
                 ctx.LineTo(new Point(40, 0), true, false);
                 ctx.LineTo(new Point(20, 40), true, false);
-                ctx.LineTo(new Point(0, 0), true, false);
+                ctx.ArcTo(new Point(0, 0), new Size(30, 30), 0, false, SweepDirection.Clockwise, true, false);
 
                 stream.Freeze();
                 return stream;

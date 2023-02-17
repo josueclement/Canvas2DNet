@@ -47,19 +47,19 @@
                             <DataTemplate DataType="{x:Type drawing:Canvas2DEllipse}">
                                 <Ellipse Width="{Binding Width}"
                                          Height="{Binding Height}"
+                                         Fill="{Binding Fill}"
                                          Stroke="{Binding Stroke}"
                                          StrokeThickness="{Binding StrokeThickness}"
-                                         StrokeDashArray="{Binding StrokeDashArray}"
-                                         Fill="{Binding Fill}" />
+                                         StrokeDashArray="{Binding StrokeDashArray}" />
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type drawing:Canvas2DPath}">
                                 <Path Width="{Binding Width}"
                                       Height="{Binding Height}"
+                                      Fill="{Binding Fill}"
                                       Stroke="{Binding Stroke}"
                                       StrokeThickness="{Binding StrokeThickness}"
                                       StrokeDashArray="{Binding StrokeDashArray}"
                                       StrokeMiterLimit="1"
-                                      Fill="{Binding Fill}"
                                       Data="{Binding Data}" />
                             </DataTemplate>
                         </ItemsControl.Resources>
