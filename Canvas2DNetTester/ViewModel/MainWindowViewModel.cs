@@ -1,5 +1,6 @@
 ﻿using Canvas2DNet;
 using Canvas2DNet.DrawingObjects;
+using Canvas2DNetTester.Model;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -12,6 +13,7 @@ namespace Canvas2DNetTester.ViewModel
     {
         public MainWindowViewModel()
         {
+            Behavior = new TestCanvasBehavior();
             DrawingObjectsDataTemplateSelector.AddDataTemplate(typeof(TestObject), typeof(TestObjectView));
 
             MyItems.Add(new Canvas2DRectangle
@@ -57,6 +59,8 @@ namespace Canvas2DNetTester.ViewModel
                 Height = 25,
                 Content = "Blah"
             });
+
+            TestDrawingObjectsGroup testGroup = new TestDrawingObjectsGroup(MyItems);
         }
 
         private Geometry GetGeometry()
@@ -78,5 +82,12 @@ namespace Canvas2DNetTester.ViewModel
 
         public ObservableCollection<DrawingObject> MyItems { get; set; } = new ObservableCollection<DrawingObject>();
         public DrawingObjectsDataTemplateSelector DrawingObjectsDataTemplateSelector { get; set; } = new DrawingObjectsDataTemplateSelector();
+
+        public Canvas2DBehavior Behavior
+        {
+            get => _behavior;
+            set => SetProperty(ref _behavior, value);
+        }
+        private Canvas2DBehavior _behavior;
     }
 }

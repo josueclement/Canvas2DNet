@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Windows.Media;
 using System.Windows;
+using System;
 
 namespace Canvas2DNet
 {
@@ -100,6 +101,68 @@ namespace Canvas2DNet
             set => SetProperty(ref _fixedPosition, value);
         }
         private bool _fixedPosition;
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Occurs when the DrawingObject is clicked in the canvas
+        /// </summary>
+        public event EventHandler<Point>? Clicked;
+
+        /// <summary>
+        /// Raise the <see cref="Clicked"/> event
+        /// </summary>
+        /// <param name="point">Mouse point on the canvas</param>
+        public void RaiseClicked(Point point)
+            => Clicked?.Invoke(this, point);
+
+        /// <summary>
+        /// Occurs when the DrawingObject is moving in the canvas
+        /// </summary>
+        public event EventHandler<Point>? Moving;
+
+        /// <summary>
+        /// Raise the <see cref="Moving"/> event
+        /// </summary>
+        /// <param name="point">Mouse point on the canvas</param>
+        public void RaiseMoving(Point point)
+            => Moving?.Invoke(this, point);
+
+        /// <summary>
+        /// Occurs when the DrawingObject is moved in the canvas
+        /// </summary>
+        public event EventHandler<Point>? Moved;
+
+        /// <summary>
+        /// Raise the <see cref="Moved"/> event
+        /// </summary>
+        /// <param name="point">Mouse point on the canvas</param>
+        public void RaiseMoved(Point point)
+            => Moved?.Invoke(this, point);
+
+        /// <summary>
+        /// Occurs when the mouse is entering the DrawingObject in the canvas
+        /// </summary>
+        public event EventHandler? MouseEnter;
+
+        /// <summary>
+        /// Raise the <see cref="MouseEnter"/> event
+        /// </summary>
+        public void RaiseMouseEnter()
+            => MouseEnter?.Invoke(this, EventArgs.Empty);
+
+        /// <summary>
+        /// Occurs when the mouse is leaving the DrawingObject in the canvas
+        /// </summary>
+        public event EventHandler? MouseLeave;
+
+        /// <summary>
+        /// Raise the <see cref="MouseLeave"/> event
+        /// </summary>
+        public void RaiseMouseLeave()
+            => MouseLeave?.Invoke(this, EventArgs.Empty);
 
         #endregion
     }

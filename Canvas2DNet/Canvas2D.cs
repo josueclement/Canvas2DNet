@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Canvas2DNet
 {
@@ -49,7 +49,7 @@ namespace Canvas2DNet
         /// Drawing objects DataTemplateSelector dependency property
         /// </summary>
         public static readonly DependencyProperty DrawingObjectsDataTemplateSelectorProperty =
-            DependencyProperty.Register(nameof(DrawingObjectsDataTemplateSelector), typeof(DrawingObjectsDataTemplateSelector), typeof(Canvas2D), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(DrawingObjectsDataTemplateSelector), typeof(DrawingObjectsDataTemplateSelector), typeof(Canvas2D), new PropertyMetadata(default));
 
         /// <summary>
         /// Drawing objects DataTemplateSelector
@@ -59,6 +59,26 @@ namespace Canvas2DNet
             get { return (DrawingObjectsDataTemplateSelector)GetValue(DrawingObjectsDataTemplateSelectorProperty); }
             set { SetValue(DrawingObjectsDataTemplateSelectorProperty, value); }
         }
+
+        /// <summary>
+        /// Canvas behavior dependency property
+        /// </summary>
+        public static readonly DependencyProperty CanvasBehaviorProperty =
+            DependencyProperty.Register(nameof(CanvasBehavior), typeof(Canvas2DBehavior), typeof(Canvas2D), new PropertyMetadata(default));
+
+        /// <summary>
+        /// Canvas behavior
+        /// </summary>
+        public Canvas2DBehavior CanvasBehavior
+        {
+            get { return (Canvas2DBehavior)GetValue(CanvasBehaviorProperty); }
+            set {  SetValue(CanvasBehaviorProperty, value); }
+        }
+
+        #endregion
+
+        #region Properties
+
 
         #endregion
 
@@ -90,6 +110,78 @@ namespace Canvas2DNet
             RoutedEventArgs routedEventArgs = new(routedEvent: CanvasLoadedEvent);
             RaiseEvent(routedEventArgs);
         }
+
+        #endregion
+
+        #region Mouse-Keyboard events handlers
+
+        /// <inheritdoc/>
+        protected override void OnMouseDown(MouseButtonEventArgs e)
+            => CanvasBehavior?.OnMouseDown(e);
+
+        /// <inheritdoc/>
+        protected override void OnMouseUp(MouseButtonEventArgs e)
+            => CanvasBehavior?.OnMouseUp(e);
+
+        /// <inheritdoc/>
+        protected override void OnMouseDoubleClick(MouseButtonEventArgs e)
+            => CanvasBehavior?.OnMouseDoubleClick(e);
+
+        /// <inheritdoc/>
+        protected override void OnMouseWheel(MouseWheelEventArgs e)
+            => CanvasBehavior?.OnMouseWheel(e);
+
+        /// <inheritdoc/>
+        protected override void OnMouseMove(MouseEventArgs e)
+            => CanvasBehavior?.OnMouseMove(e);
+
+        /// <inheritdoc/>
+        protected override void OnMouseEnter(MouseEventArgs e)
+            => CanvasBehavior?.OnMouseEnter(e);
+
+        /// <inheritdoc/>
+        protected override void OnMouseLeave(MouseEventArgs e)
+            => CanvasBehavior?.OnMouseLeave(e);
+
+        /// <inheritdoc/>
+        protected override void OnKeyDown(KeyEventArgs e)
+            => CanvasBehavior?.OnKeyDown(e);
+
+        /// <inheritdoc/>
+        protected override void OnKeyUp(KeyEventArgs e)
+            => CanvasBehavior?.OnKeyUp(e);
+
+        /// <inheritdoc/>
+        protected override void OnPreviewDragEnter(DragEventArgs e)
+            => CanvasBehavior?.OnPreviewDragEnter(e);
+
+        /// <inheritdoc/>
+        protected override void OnPreviewDragLeave(DragEventArgs e)
+            => CanvasBehavior?.OnPreviewDragLeave(e);
+
+        /// <inheritdoc/>
+        protected override void OnPreviewDragOver(DragEventArgs e)
+            => CanvasBehavior?.OnPreviewDragOver(e);
+
+        /// <inheritdoc/>
+        protected override void OnPreviewDrop(DragEventArgs e)
+            => CanvasBehavior?.OnPreviewDrop(e);
+
+        /// <inheritdoc/>
+        protected override void OnDragEnter(DragEventArgs e)
+            => CanvasBehavior?.OnDragEnter(e);
+
+        /// <inheritdoc/>
+        protected override void OnDragLeave(DragEventArgs e)
+            => CanvasBehavior?.OnDragLeave(e);
+
+        /// <inheritdoc/>
+        protected override void OnDragOver(DragEventArgs e)
+            => CanvasBehavior?.OnDragOver(e);
+
+        /// <inheritdoc/>
+        protected override void OnDrop(DragEventArgs e)
+            => CanvasBehavior?.OnDrop(e);
 
         #endregion
     }

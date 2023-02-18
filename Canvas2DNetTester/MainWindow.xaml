@@ -10,6 +10,7 @@
     <Grid>
         <canvas:Canvas2D Background="DarkCyan"
                          Items="{Binding MyItems}"
-                         DrawingObjectsDataTemplateSelector="{Binding DrawingObjectsDataTemplateSelector}" />
+                         DrawingObjectsDataTemplateSelector="{Binding DrawingObjectsDataTemplateSelector}"
+                         CanvasBehavior="{Binding Behavior}"/>
     </Grid>
 </Window>
