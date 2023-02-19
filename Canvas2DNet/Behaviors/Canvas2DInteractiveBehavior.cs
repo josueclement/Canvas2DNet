@@ -19,6 +19,11 @@ namespace Canvas2DNet.Behaviors
         protected DrawingObject? _movingObject;
 
         /// <summary>
+        /// Moving position
+        /// </summary>
+        protected Point _movingPosition;
+
+        /// <summary>
         /// Object under the mouse cursor
         /// </summary>
         protected DrawingObject? _mouseOverObject;
@@ -32,6 +37,7 @@ namespace Canvas2DNet.Behaviors
             if (e.ChangedButton == MouseButton.Left && drawingObject != null)
             {
                 _movingObject = drawingObject;
+                _movingPosition = mousePosition;
                 _movingObject.RaiseClicked(mousePosition);
             }
         }
@@ -43,7 +49,7 @@ namespace Canvas2DNet.Behaviors
 
             if (e.ChangedButton == MouseButton.Left && _movingObject != null)
             {
-                _movingObject.RaiseMoved(mousePosition);
+                _movingObject.RaiseMoved(mousePosition, mousePosition - _movingPosition);
                 _movingObject = null;
             }
         }
@@ -54,7 +60,8 @@ namespace Canvas2DNet.Behaviors
             Point mousePosition = e.GetPosition(canvas);
             if (_movingObject != null)
             {
-                _movingObject.RaiseMoving(mousePosition);
+                _movingObject.RaiseMoving(mousePosition, mousePosition - _movingPosition);
+                _movingPosition = mousePosition;
                 return;
             }
 
@@ -78,6 +85,10 @@ namespace Canvas2DNet.Behaviors
                     _mouseOverObject!.RaiseMouseLeave();
                     _mouseOverObject = drawingObject;
                     _mouseOverObject.RaiseMouseEnter();
+                }
+                if (drawingObject != null && _mouseOverObject == drawingObject)
+                {
+                    _mouseOverObject.RaiseMouseMovingOver(mousePosition);
                 }
             }
         }

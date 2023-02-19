@@ -121,26 +121,28 @@ namespace Canvas2DNet
         /// <summary>
         /// Occurs when the DrawingObject is moving in the canvas
         /// </summary>
-        public event EventHandler<Point>? Moving;
+        public event MouseMovementEventHandler? Moving;
 
         /// <summary>
         /// Raise the <see cref="Moving"/> event
         /// </summary>
-        /// <param name="point">Mouse point on the canvas</param>
-        public void RaiseMoving(Point point)
-            => Moving?.Invoke(this, point);
+        /// <param name="mousePosition">Mouse point on the canvas</param>
+        /// <param name="offset">Offset from last position</param>
+        public void RaiseMoving(Point mousePosition, Vector offset)
+            => Moving?.Invoke(this, new MouseMovementEventArgs(mousePosition, offset));
 
         /// <summary>
         /// Occurs when the DrawingObject is moved in the canvas
         /// </summary>
-        public event EventHandler<Point>? Moved;
+        public event MouseMovementEventHandler? Moved;
 
         /// <summary>
         /// Raise the <see cref="Moved"/> event
         /// </summary>
-        /// <param name="point">Mouse point on the canvas</param>
-        public void RaiseMoved(Point point)
-            => Moved?.Invoke(this, point);
+        /// <param name="mousePosition">Mouse point on the canvas</param>
+        /// <param name="offset">Offset from last position</param>
+        public void RaiseMoved(Point mousePosition, Vector offset)
+            => Moved?.Invoke(this, new MouseMovementEventArgs(mousePosition, offset));
 
         /// <summary>
         /// Occurs when the mouse is entering the DrawingObject in the canvas
@@ -164,6 +166,51 @@ namespace Canvas2DNet
         public void RaiseMouseLeave()
             => MouseLeave?.Invoke(this, EventArgs.Empty);
 
+        /// <summary>
+        /// Occurs when the mouse is moving over the DrawingObject
+        /// </summary>
+        public event EventHandler<Point>? MouseMovingOver;
+
+        /// <summary>
+        /// Raise the <see cref="MouseMovingOver"/> event
+        /// </summary>
+        /// <param name="mousePosition">Mouse position on the canvas</param>
+        public void RaiseMouseMovingOver(Point mousePosition)
+            => MouseMovingOver?.Invoke(this, mousePosition);
+
         #endregion
     }
+
+    /// <summary>
+    /// Event args for mouse movements
+    /// </summary>
+    public class MouseMovementEventArgs : EventArgs
+    {
+        /// <summary>
+        /// Constructor for <see cref="MouseMovementEventArgs"/>
+        /// </summary>
+        /// <param name="mousePosition">Mouse position</param>
+        /// <param name="offset">Offset from last position</param>
+        public MouseMovementEventArgs(Point mousePosition, Vector offset)
+        {
+            MousePosition = mousePosition;
+            Offset = offset;
+        }
+
+        /// <summary>
+        /// Mouse position
+        /// </summary>
+        public Point MousePosition { get; private set; }
+        /// <summary>
+        /// Offset from last position
+        /// </summary>
+        public Vector Offset { get; private set; }
+    }
+
+    /// <summary>
+    /// Event handler for mouse movements
+    /// </summary>
+    /// <param name="sender">Sender</param>
+    /// <param name="args">Mouse movement args</param>
+    public delegate  void MouseMovementEventHandler(object sender, MouseMovementEventArgs args);
 }
