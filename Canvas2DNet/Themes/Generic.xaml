@@ -27,7 +27,7 @@
                             </Style>
                         </ItemsControl.ItemContainerStyle>
                         <ItemsControl.Resources>
-                            <DataTemplate DataType="{x:Type drawing:Canvas2DRectangle}">
+                            <DataTemplate DataType="{x:Type drawing:Rectangle}">
                                 <Rectangle Width="{Binding Width}"
                                            Height="{Binding Height}"
                                            Fill="{Binding Fill}" 
@@ -35,7 +35,7 @@
                                            StrokeThickness="{Binding StrokeThickness}"
                                            StrokeDashArray="{Binding StrokeDashArray}" />
                             </DataTemplate>
-                            <DataTemplate DataType="{x:Type drawing:Canvas2DLine}">
+                            <DataTemplate DataType="{x:Type drawing:Line}">
                                 <Line X1="{Binding Ax}"
                                       Y1="{Binding Ay}"
                                       X2="{Binding Bx}"
@@ -44,7 +44,7 @@
                                       StrokeThickness="{Binding StrokeThickness}"
                                       StrokeDashArray="{Binding StrokeDashArray}"/>
                             </DataTemplate>
-                            <DataTemplate DataType="{x:Type drawing:Canvas2DEllipse}">
+                            <DataTemplate DataType="{x:Type drawing:Ellipse}">
                                 <Ellipse Width="{Binding Width}"
                                          Height="{Binding Height}"
                                          Fill="{Binding Fill}"
@@ -52,7 +52,7 @@
                                          StrokeThickness="{Binding StrokeThickness}"
                                          StrokeDashArray="{Binding StrokeDashArray}" />
                             </DataTemplate>
-                            <DataTemplate DataType="{x:Type drawing:Canvas2DPath}">
+                            <DataTemplate DataType="{x:Type drawing:Path}">
                                 <Path Width="{Binding Width}"
                                       Height="{Binding Height}"
                                       Fill="{Binding Fill}"

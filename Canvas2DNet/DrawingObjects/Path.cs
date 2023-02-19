@@ -5,7 +5,7 @@ namespace Canvas2DNet.DrawingObjects
     /// <summary>
     /// Path drawing object
     /// </summary>
-    public class Canvas2DPath : Canvas2DShape
+    public class Path : Shape
     {
         #region Properties
 

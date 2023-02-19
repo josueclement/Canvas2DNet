@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Canvas2DNet.Behaviors
+namespace Canvas2DNet.Interactions
 {
     /// <summary>
-    /// Interactive behavior for <see cref="Canvas2D"/>
+    /// Default interactions for <see cref="Canvas2D"/>
     /// </summary>
-    public class Canvas2DInteractiveBehavior : Canvas2DBehavior
+    public class StandardInteractions : Canvas2DInteractions
     {
         /// <summary>
         /// Moving object

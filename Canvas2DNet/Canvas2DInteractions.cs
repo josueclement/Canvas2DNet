@@ -2,13 +2,14 @@
 using System.Windows;
 using System.Collections.Generic;
 using System.Windows.Media;
+using System.Linq;
 
 namespace Canvas2DNet
 {
     /// <summary>
-    /// Base behavior for <see cref="Canvas2D"/>
+    /// Base interactions for <see cref="Canvas2D"/>
     /// </summary>
-    public abstract class Canvas2DBehavior
+    public abstract class Canvas2DInteractions
     {
         /// <inheritdoc/>
         public virtual void OnMouseDown(MouseButtonEventArgs e, Canvas2D canvas)
@@ -106,12 +107,12 @@ namespace Canvas2DNet
         private List<DependencyObject> _hitTestObjects = new List<DependencyObject>();
 
         /// <summary>
-        /// Get the objects
+        /// Get the objects under the mouse cursor
         /// </summary>
         /// <param name="root">Root visual object</param>
         /// <param name="mousePosition">Mouse position on the root visual object</param>
         /// <returns></returns>
-        protected List<DependencyObject> HitTestFull(Visual root, Point mousePosition)
+        protected IEnumerable<DependencyObject>? HitTestFull(Visual root, Point mousePosition)
         {
             lock (_hitTestObjects)
             {
@@ -121,9 +122,21 @@ namespace Canvas2DNet
                     new HitTestResultCallback(MyHitTestResult),
                     new PointHitTestParameters(mousePosition));
 
-                return _hitTestObjects;
+                return _hitTestObjects.ToList();
             }
         }
+
+        ///// <summary>
+        ///// Get the objects DataContexts under the mouse cursor
+        ///// </summary>
+        ///// <param name="root">Root visual object</param>
+        ///// <param name="mousePosition">Mouse position on the root visual object</param>
+        ///// <returns></returns>
+        //protected IEnumerable<DrawingObject>? HitTestFullDataContext(Visual root, Point mousePosition)
+        //{
+        //    IEnumerable<DependencyObject>? objects = HitTestFull(root, mousePosition);
+
+        //}
 
         private HitTestResultBehavior MyHitTestResult(HitTestResult result)
         {

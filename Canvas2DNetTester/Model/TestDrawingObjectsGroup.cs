@@ -17,7 +17,7 @@ namespace Canvas2DNetTester.Model
         public TestDrawingObjectsGroup(ObservableCollection<DrawingObject> drawingObjects)
             : base(drawingObjects)
         {
-            Canvas2DRectangle r1 = new Canvas2DRectangle
+            Rectangle r1 = new Rectangle
             {
                 X = 400,
                 Y = 20,
@@ -26,7 +26,7 @@ namespace Canvas2DNetTester.Model
                 Stroke = new SolidColorBrush(Colors.Yellow),
                 Fill = new SolidColorBrush(Colors.Black)
             };
-            Canvas2DRectangle r2 = new Canvas2DRectangle
+            Rectangle r2 = new Rectangle
             {
                 X = 440,
                 Y = 20,

@@ -8,9 +8,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <canvas:Canvas2D Background="DarkCyan"
+        <canvas:Canvas2D Background="#1e1e1e"
                          Items="{Binding MyItems}"
                          DrawingObjectsDataTemplateSelector="{Binding DrawingObjectsDataTemplateSelector}"
-                         CanvasBehavior="{Binding Behavior}"/>
+                         CanvasInteractions="{Binding Interactions}"/>
     </Grid>
 </Window>

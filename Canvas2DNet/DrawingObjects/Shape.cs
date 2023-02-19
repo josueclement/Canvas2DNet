@@ -6,7 +6,7 @@ namespace Canvas2DNet.DrawingObjects
     /// <summary>
     /// Base drawing object shape
     /// </summary>
-    public abstract class Canvas2DShape : DrawingObject
+    public abstract class Shape : DrawingObject
     {
         #region Properties
 

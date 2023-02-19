@@ -1,5 +1,5 @@
 ﻿using Canvas2DNet;
-using Canvas2DNet.Behaviors;
+using Canvas2DNet.Interactions;
 using Canvas2DNet.DrawingObjects;
 using Canvas2DNetTester.Model;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -13,10 +13,10 @@ namespace Canvas2DNetTester.ViewModel
     {
         public MainWindowViewModel()
         {
-            Behavior = new Canvas2DInteractiveBehavior();
+            Interactions = new StandardInteractions();
             DrawingObjectsDataTemplateSelector.AddDataTemplate(typeof(TestObject), typeof(TestObjectView));
 
-            MyItems.Add(new Canvas2DRectangle
+            MyItems.Add(new Rectangle
             {
                 X = 100,
                 Y = 100,
@@ -24,7 +24,7 @@ namespace Canvas2DNetTester.ViewModel
                 Height = 100,
                 Fill = new SolidColorBrush(Colors.DeepSkyBlue)
             });
-            MyItems.Add(new Canvas2DLine
+            MyItems.Add(new Line
             {
                 Ax = 20,
                 Ay = 20,
@@ -32,7 +32,7 @@ namespace Canvas2DNetTester.ViewModel
                 By = 30,
                 Stroke = new SolidColorBrush(Colors.Black)
             });
-            MyItems.Add(new Canvas2DEllipse
+            MyItems.Add(new Ellipse
             {
                 X = 130,
                 Y = 20,
@@ -40,7 +40,7 @@ namespace Canvas2DNetTester.ViewModel
                 Height = 20,
                 Stroke = new SolidColorBrush(Colors.Black)
             });
-            MyItems.Add(new Canvas2DPath
+            MyItems.Add(new Path
             {
                 X = 190,
                 Y = 20,
@@ -83,11 +83,11 @@ namespace Canvas2DNetTester.ViewModel
         public ObservableCollection<DrawingObject> MyItems { get; set; } = new ObservableCollection<DrawingObject>();
         public DrawingObjectsDataTemplateSelector DrawingObjectsDataTemplateSelector { get; set; } = new DrawingObjectsDataTemplateSelector();
 
-        public Canvas2DBehavior? Behavior
+        public Canvas2DInteractions? Interactions
         {
-            get => _behavior;
-            set => SetProperty(ref _behavior, value);
+            get => _interactions;
+            set => SetProperty(ref _interactions, value);
         }
-        private Canvas2DBehavior? _behavior;
+        private Canvas2DInteractions? _interactions;
     }
 }

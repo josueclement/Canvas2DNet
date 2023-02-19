@@ -3,7 +3,7 @@
     /// <summary>
     /// Line drawing object
     /// </summary>
-    public class Canvas2DLine : Canvas2DShape
+    public class Line : Shape
     {
         /// <summary>
         /// X position for point A

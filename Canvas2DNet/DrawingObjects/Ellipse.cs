@@ -1,9 +1,9 @@
 ﻿namespace Canvas2DNet.DrawingObjects
 {
     /// <summary>
-    /// Rectangle drawing object
+    /// Ellipse drawing object
     /// </summary>
-    public class Canvas2DRectangle : Canvas2DShape
+    public class Ellipse : Shape
     {
         #region Properties
 
