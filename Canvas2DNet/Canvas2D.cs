@@ -77,11 +77,6 @@ namespace Canvas2DNet
 
         #endregion
 
-        #region Properties
-
-
-        #endregion
-
         #region Events
 
         /// <summary>
@@ -117,71 +112,71 @@ namespace Canvas2DNet
 
         /// <inheritdoc/>
         protected override void OnMouseDown(MouseButtonEventArgs e)
-            => CanvasBehavior?.OnMouseDown(e);
+            => CanvasBehavior?.OnMouseDown(e, this);
 
         /// <inheritdoc/>
         protected override void OnMouseUp(MouseButtonEventArgs e)
-            => CanvasBehavior?.OnMouseUp(e);
+            => CanvasBehavior?.OnMouseUp(e, this);
 
         /// <inheritdoc/>
         protected override void OnMouseDoubleClick(MouseButtonEventArgs e)
-            => CanvasBehavior?.OnMouseDoubleClick(e);
+            => CanvasBehavior?.OnMouseDoubleClick(e, this);
 
         /// <inheritdoc/>
         protected override void OnMouseWheel(MouseWheelEventArgs e)
-            => CanvasBehavior?.OnMouseWheel(e);
+            => CanvasBehavior?.OnMouseWheel(e, this);
 
         /// <inheritdoc/>
         protected override void OnMouseMove(MouseEventArgs e)
-            => CanvasBehavior?.OnMouseMove(e);
+            => CanvasBehavior?.OnMouseMove(e, this);
 
         /// <inheritdoc/>
         protected override void OnMouseEnter(MouseEventArgs e)
-            => CanvasBehavior?.OnMouseEnter(e);
+            => CanvasBehavior?.OnMouseEnter(e, this);
 
         /// <inheritdoc/>
         protected override void OnMouseLeave(MouseEventArgs e)
-            => CanvasBehavior?.OnMouseLeave(e);
+            => CanvasBehavior?.OnMouseLeave(e, this);
 
         /// <inheritdoc/>
         protected override void OnKeyDown(KeyEventArgs e)
-            => CanvasBehavior?.OnKeyDown(e);
+            => CanvasBehavior?.OnKeyDown(e, this);
 
         /// <inheritdoc/>
         protected override void OnKeyUp(KeyEventArgs e)
-            => CanvasBehavior?.OnKeyUp(e);
+            => CanvasBehavior?.OnKeyUp(e, this);
 
         /// <inheritdoc/>
         protected override void OnPreviewDragEnter(DragEventArgs e)
-            => CanvasBehavior?.OnPreviewDragEnter(e);
+            => CanvasBehavior?.OnPreviewDragEnter(e, this);
 
         /// <inheritdoc/>
         protected override void OnPreviewDragLeave(DragEventArgs e)
-            => CanvasBehavior?.OnPreviewDragLeave(e);
+            => CanvasBehavior?.OnPreviewDragLeave(e, this);
 
         /// <inheritdoc/>
         protected override void OnPreviewDragOver(DragEventArgs e)
-            => CanvasBehavior?.OnPreviewDragOver(e);
+            => CanvasBehavior?.OnPreviewDragOver(e, this);
 
         /// <inheritdoc/>
         protected override void OnPreviewDrop(DragEventArgs e)
-            => CanvasBehavior?.OnPreviewDrop(e);
+            => CanvasBehavior?.OnPreviewDrop(e, this);
 
         /// <inheritdoc/>
         protected override void OnDragEnter(DragEventArgs e)
-            => CanvasBehavior?.OnDragEnter(e);
+            => CanvasBehavior?.OnDragEnter(e, this);
 
         /// <inheritdoc/>
         protected override void OnDragLeave(DragEventArgs e)
-            => CanvasBehavior?.OnDragLeave(e);
+            => CanvasBehavior?.OnDragLeave(e, this);
 
         /// <inheritdoc/>
         protected override void OnDragOver(DragEventArgs e)
-            => CanvasBehavior?.OnDragOver(e);
+            => CanvasBehavior?.OnDragOver(e, this);
 
         /// <inheritdoc/>
         protected override void OnDrop(DragEventArgs e)
-            => CanvasBehavior?.OnDrop(e);
+            => CanvasBehavior?.OnDrop(e, this);
 
         #endregion
     }

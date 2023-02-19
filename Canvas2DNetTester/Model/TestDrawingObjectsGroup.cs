@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace Canvas2DNetTester.Model
@@ -32,6 +33,32 @@ namespace Canvas2DNetTester.Model
                 Height = 10,
                 Stroke = new SolidColorBrush(Colors.Yellow),
                 Fill = new SolidColorBrush(Colors.Black)
+            };
+
+            r1.Clicked += (s, e) =>
+            {
+
+            };
+
+            r1.Moving += (s, e) =>
+            {
+                r1.X = e.X;
+                r1.Y = e.Y;
+            };
+
+            r1.Moved += (s, e) =>
+            {
+                MessageBox.Show("movement done !");
+            };
+
+            r1.MouseEnter += (s, e) =>
+            {
+                r1.Stroke = new SolidColorBrush(Colors.Red);
+            };
+
+            r1.MouseLeave += (s, e) =>
+            {
+                r1.Stroke = new SolidColorBrush(Colors.Yellow);
             };
 
             DrawingObjects?.Add(r1);

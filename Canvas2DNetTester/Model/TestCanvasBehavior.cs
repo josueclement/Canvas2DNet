@@ -11,8 +11,9 @@ namespace Canvas2DNetTester.Model
 {
     public class TestCanvasBehavior : Canvas2DBehavior
     {
-        public override void OnMouseDoubleClick(MouseButtonEventArgs e)
+        public override void OnMouseDoubleClick(MouseButtonEventArgs e, Canvas2D canvas)
         {
+            var result = HitTest(canvas, e.GetPosition(canvas));
             MessageBox.Show("double click");
         }
     }
