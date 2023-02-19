@@ -33,7 +33,7 @@ namespace Canvas2DNet
         /// <summary>
         /// Drawing objects
         /// </summary>
-        public List<DrawingObject>? DrawingObjects { get; private set; }
+        public List<DrawingObject> DrawingObjects { get; private set; }
 
         #endregion
 

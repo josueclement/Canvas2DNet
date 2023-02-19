@@ -71,8 +71,8 @@ namespace Canvas2DNetTester.Model
                 Debug.WriteLine($"MOUSEMOVINGOVER: {e}");
             };
 
-            DrawingObjects?.Add(r1);
-            DrawingObjects?.Add(r2);
+            DrawingObjects.Add(r1);
+            DrawingObjects.Add(r2);
 
             AddToCanvas();
         }
