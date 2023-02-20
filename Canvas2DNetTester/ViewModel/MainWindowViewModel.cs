@@ -60,7 +60,8 @@ namespace Canvas2DNetTester.ViewModel
                 Content = "Blah"
             });
 
-            TestDrawingObjectsGroup testGroup = new TestDrawingObjectsGroup(MyItems);
+            TestDrawingObjectsGroup testGroup = new TestDrawingObjectsGroup();
+            MyGroups.Add(testGroup);
         }
 
         private Geometry GetGeometry()
@@ -81,6 +82,7 @@ namespace Canvas2DNetTester.ViewModel
         }
 
         public ObservableCollection<DrawingObject> MyItems { get; set; } = new ObservableCollection<DrawingObject>();
+        public ObservableCollection<DrawingObjectsGroup> MyGroups { get; set; } = new ObservableCollection<DrawingObjectsGroup>();
         public DrawingObjectsDataTemplateSelector DrawingObjectsDataTemplateSelector { get; set; } = new DrawingObjectsDataTemplateSelector();
 
         public Canvas2DInteractions? Interactions

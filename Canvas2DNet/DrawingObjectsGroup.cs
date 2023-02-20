@@ -9,20 +9,13 @@ namespace Canvas2DNet
     /// </summary>
     public abstract class DrawingObjectsGroup : ObservableObject
     {
-        /// <summary>
-        /// Canvas drawing objects
-        /// </summary>
-        protected ObservableCollection<DrawingObject> _canvasDrawingObjects;
-
         #region Constructor
 
         /// <summary>
         /// Constructor for <see cref="DrawingObjectsGroup"/>
         /// </summary>
-        /// <param name="canvasDrawingObjects">Canvas drawing objects</param>
-        public DrawingObjectsGroup(ObservableCollection<DrawingObject> canvasDrawingObjects)
+        public DrawingObjectsGroup()
         {
-            _canvasDrawingObjects = canvasDrawingObjects;
             DrawingObjects = new List<DrawingObject>();
         }
 
@@ -38,18 +31,6 @@ namespace Canvas2DNet
         #endregion
 
         #region Methods
-
-        /// <summary>
-        /// Add the drawing objects to canvas
-        /// </summary>
-        public void AddToCanvas()
-            => DrawingObjects?.ForEach(x => _canvasDrawingObjects?.Add(x));
-
-        /// <summary>
-        /// Remove the drawing objects from canvas
-        /// </summary>
-        public void RemoveFromCanvas()
-            => DrawingObjects?.ForEach(x => _canvasDrawingObjects?.Remove(x));
 
         /// <summary>
         /// Show the drawing objects

@@ -14,8 +14,7 @@ namespace Canvas2DNetTester.Model
 {
     public class TestDrawingObjectsGroup : DrawingObjectsGroup
     {
-        public TestDrawingObjectsGroup(ObservableCollection<DrawingObject> drawingObjects)
-            : base(drawingObjects)
+        public TestDrawingObjectsGroup()
         {
             Rectangle r1 = new Rectangle
             {
@@ -73,8 +72,6 @@ namespace Canvas2DNetTester.Model
 
             DrawingObjects.Add(r1);
             DrawingObjects.Add(r2);
-
-            AddToCanvas();
         }
     }
 }
