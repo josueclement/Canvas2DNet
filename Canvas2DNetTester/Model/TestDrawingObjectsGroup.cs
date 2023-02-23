@@ -75,7 +75,7 @@ namespace Canvas2DNetTester.Model
             DrawingObjects.Add(r2);
         }
 
-        public event EventHandler Clicked;
+        public event EventHandler? Clicked;
         
     }
 }

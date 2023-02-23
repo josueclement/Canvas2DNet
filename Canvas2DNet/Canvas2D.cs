@@ -25,7 +25,7 @@ namespace Canvas2DNet
         /// Drawing objects dependency property
         /// </summary>
         public static readonly DependencyProperty ItemsProperty =
-            DependencyProperty.Register(nameof(Items), typeof(ObservableCollection<DrawingObject>), typeof(Canvas2D), new PropertyMetadata(default));
+            DependencyProperty.Register(nameof(Items), typeof(ObservableCollection<DrawingObject>), typeof(Canvas2D), new PropertyMetadata(new ObservableCollection<DrawingObject>()));
 
         /// <summary>
         /// Drawing objects
