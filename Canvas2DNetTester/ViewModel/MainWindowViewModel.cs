@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Media;
+using System.Linq;
 
 namespace Canvas2DNetTester.ViewModel
 {
@@ -61,7 +62,17 @@ namespace Canvas2DNetTester.ViewModel
             });
 
             TestDrawingObjectsGroup testGroup = new TestDrawingObjectsGroup();
+            testGroup.Clicked += TestGroup_Clicked;
             MyGroups.Add(testGroup);
+        }
+
+        private void TestGroup_Clicked(object? sender, System.EventArgs e)
+        {
+            TestDrawingObjectsGroup2? existingItem = MyGroups.OfType<TestDrawingObjectsGroup2>().FirstOrDefault();
+            if (existingItem == null)
+                MyGroups.Add(new TestDrawingObjectsGroup2());
+            else
+                MyGroups.Remove(existingItem);
         }
 
         private Geometry GetGeometry()

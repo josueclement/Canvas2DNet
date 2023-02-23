@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Canvas2DNet
 {
@@ -26,29 +25,40 @@ namespace Canvas2DNet
         /// <summary>
         /// Drawing objects
         /// </summary>
-        public List<DrawingObject> DrawingObjects { get; private set; }
+        public List<DrawingObject> DrawingObjects { get; }
 
         #endregion
 
         #region Methods
 
         /// <summary>
+        /// Get the drawing objects to add to the canvas
+        /// </summary>
+        public virtual IEnumerable<DrawingObject>? GetDrawingObjectsToAdd()
+            => DrawingObjects;
+
+        /// <summary>
+        /// Get the drawing objects to remove from the canvas
+        /// </summary>
+        public virtual IEnumerable<DrawingObject>? GetDrawingObjectsToRemove()
+            => DrawingObjects;
+
+        /// <summary>
+        /// Unregister drawing objects events
+        /// </summary>
+        public virtual void UnregisterDrawingObjectsEvents() { }
+
+        /// <summary>
         /// Show the drawing objects
         /// </summary>
-        public void Show()
+        public virtual void Show()
             => DrawingObjects?.ForEach(x => x.Visibility = System.Windows.Visibility.Visible);
 
         /// <summary>
         /// Hide the drawing objects
         /// </summary>
-        public void Hide()
+        public virtual void Hide()
             => DrawingObjects?.ForEach(x => x.Visibility = System.Windows.Visibility.Collapsed);
-
-        /// <summary>
-        /// Override this method to unregister 
-        /// </summary>
-        protected virtual void UnregisterEvents()
-        { }
 
         #endregion
     }

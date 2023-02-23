@@ -1,4 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -49,28 +53,46 @@ namespace Canvas2DNet
 
         private static void OnGroupsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (e.OldValue is ObservableCollection<DrawingObjectsGroup> oldValue)
-                oldValue.CollectionChanged -= Groups_CollectionChanged;
-            if (e.NewValue is ObservableCollection<DrawingObjectsGroup> newValue)
-                newValue.CollectionChanged += Groups_CollectionChanged;
-        }
-
-        private static void Groups_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            if (e.OldItems != null) {
-                foreach (DrawingObjectsGroup group in e.OldItems)
+            if (d is Canvas2D canvas)
+            {
+                if (e.OldValue is ObservableCollection<DrawingObjectsGroup> oldValue)
                 {
-                    //call unregister events
-                    //remove items from canvas
+                    oldValue.CollectionChanged -= canvas!.Groups_CollectionChanged;
+                    canvas?.RemoveDrawingObjects(oldValue);
+                }
+                if (e.NewValue is ObservableCollection<DrawingObjectsGroup> newValue)
+                {
+                    newValue.CollectionChanged += canvas!.Groups_CollectionChanged;
+                    canvas?.AddDrawingObjects(newValue);
                 }
             }
+        }
+
+        private void Groups_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems != null)
+                RemoveDrawingObjects(e.OldItems);
             if (e.NewItems != null)
+                AddDrawingObjects(e.NewItems);
+        }
+
+        private void AddDrawingObjects(IEnumerable? groups)
+        {
+            foreach (DrawingObjectsGroup group in groups ?? Enumerable.Empty<DrawingObjectsGroup>())
             {
-                foreach (DrawingObjectsGroup group in e.NewItems)
-                {
-                    //call register events
-                    //add items to canvas
-                }
+                foreach (DrawingObject drawingObject in group.GetDrawingObjectsToAdd() ?? Enumerable.Empty<DrawingObject>())
+                    Items.Add(drawingObject);
+            }
+        }
+
+        private void RemoveDrawingObjects(IEnumerable? groups)
+        {
+            foreach (DrawingObjectsGroup group in groups ?? Enumerable.Empty<DrawingObjectsGroup>())
+            {
+                group.UnregisterDrawingObjectsEvents();
+
+                foreach (DrawingObject drawingObject in group.GetDrawingObjectsToRemove() ?? Enumerable.Empty<DrawingObject>())
+                    Items.Remove(drawingObject);
             }
         }
 

@@ -38,6 +38,7 @@ namespace Canvas2DNetTester.Model
             r1.Clicked += (s, e) =>
             {
                 Debug.WriteLine($"CLICKED: {e}");
+                Clicked?.Invoke(this, EventArgs.Empty);
             };
 
             r1.Moving += (s, e) =>
@@ -73,5 +74,8 @@ namespace Canvas2DNetTester.Model
             DrawingObjects.Add(r1);
             DrawingObjects.Add(r2);
         }
+
+        public event EventHandler Clicked;
+        
     }
 }
