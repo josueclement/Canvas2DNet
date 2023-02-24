@@ -1,0 +1,70 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Canvas2DNet"
+                    xmlns:drawing="clr-namespace:Canvas2DNet.DrawingObjects">
+    <Style TargetType="{x:Type local:Canvas2D}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Canvas2D}">
+                    <ItemsControl ItemsSource="{TemplateBinding Items}"
+                                  ItemTemplateSelector="{TemplateBinding DrawingObjectsDataTemplateSelector}"
+                                  Background="{TemplateBinding Background}"
+                                  ClipToBounds="True">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Canvas.Left" Value="{Binding X}" />
+                                <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                                <Setter Property="Canvas.ZIndex" Value="{Binding ZIndex}" />
+                                <Setter Property="RenderTransform" Value="{Binding RenderTransform}" />
+                                <Setter Property="RenderTransformOrigin" Value="{Binding RenderTransformOrigin}" />
+                                <Setter Property="Visibility" Value="{Binding Visibility}" />
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.Resources>
+                            <DataTemplate DataType="{x:Type drawing:Rectangle}">
+                                <Rectangle Width="{Binding Width}"
+                                           Height="{Binding Height}"
+                                           Fill="{Binding Fill}" 
+                                           Stroke="{Binding Stroke}"
+                                           StrokeThickness="{Binding StrokeThickness}"
+                                           StrokeDashArray="{Binding StrokeDashArray}" />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type drawing:Line}">
+                                <Line X1="{Binding Ax}"
+                                      Y1="{Binding Ay}"
+                                      X2="{Binding Bx}"
+                                      Y2="{Binding By}"
+                                      Stroke="{Binding Stroke}"
+                                      StrokeThickness="{Binding StrokeThickness}"
+                                      StrokeDashArray="{Binding StrokeDashArray}"/>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type drawing:Ellipse}">
+                                <Ellipse Width="{Binding Width}"
+                                         Height="{Binding Height}"
+                                         Fill="{Binding Fill}"
+                                         Stroke="{Binding Stroke}"
+                                         StrokeThickness="{Binding StrokeThickness}"
+                                         StrokeDashArray="{Binding StrokeDashArray}" />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type drawing:Path}">
+                                <Path Width="{Binding Width}"
+                                      Height="{Binding Height}"
+                                      Fill="{Binding Fill}"
+                                      Stroke="{Binding Stroke}"
+                                      StrokeThickness="{Binding StrokeThickness}"
+                                      StrokeDashArray="{Binding StrokeDashArray}"
+                                      StrokeMiterLimit="1"
+                                      Data="{Binding Data}" />
+                            </DataTemplate>
+                        </ItemsControl.Resources>
+                    </ItemsControl>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
