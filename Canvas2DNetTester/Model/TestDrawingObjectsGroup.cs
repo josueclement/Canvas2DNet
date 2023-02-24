@@ -23,7 +23,8 @@ namespace Canvas2DNetTester.Model
                 Width = 20,
                 Height = 20,
                 Stroke = new SolidColorBrush(Colors.Yellow),
-                Fill = new SolidColorBrush(Colors.Black)
+                Fill = new SolidColorBrush(Colors.Black),
+                StrokeThickness = 1d
             };
             Rectangle r2 = new Rectangle
             {
@@ -32,7 +33,8 @@ namespace Canvas2DNetTester.Model
                 Width = 20,
                 Height = 20,
                 Stroke = new SolidColorBrush(Colors.Yellow),
-                Fill = new SolidColorBrush(Colors.Black)
+                Fill = new SolidColorBrush(Colors.Black),
+                StrokeThickness = 1d
             };
 
             r1.Clicked += (s, e) =>

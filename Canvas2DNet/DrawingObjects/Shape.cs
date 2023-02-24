@@ -33,12 +33,12 @@ namespace Canvas2DNet.DrawingObjects
         /// <summary>
         /// Stroke thickness
         /// </summary>
-        public Thickness StrokeThickness
+        public double StrokeThickness
         {
             get => _strokeThickness;
             set => SetProperty(ref _strokeThickness, value);
         }
-        private Thickness _strokeThickness;
+        private double _strokeThickness;
 
         /// <summary>
         /// Stroke dash array
