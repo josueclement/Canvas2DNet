@@ -1,4 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -21,15 +25,75 @@ namespace Canvas2DNet
         /// Drawing objects dependency property
         /// </summary>
         public static readonly DependencyProperty ItemsProperty =
-            DependencyProperty.Register(nameof(Items), typeof(ObservableCollection<DrawingObject>), typeof(Canvas2D), new PropertyMetadata(default));
+            DependencyProperty.Register(nameof(Items), typeof(ObservableCollection<DrawingObject>), typeof(Canvas2D), new PropertyMetadata(new ObservableCollection<DrawingObject>()));
 
         /// <summary>
         /// Drawing objects
         /// </summary>
         public ObservableCollection<DrawingObject> Items
         {
-            get { return (ObservableCollection<DrawingObject>)GetValue(ItemsProperty); }
-            set { SetValue(ItemsProperty, value); }
+            get => (ObservableCollection<DrawingObject>)GetValue(ItemsProperty); 
+            set => SetValue(ItemsProperty, value); 
+        }
+
+        /// <summary>
+        /// Drawing objects groups dependency property
+        /// </summary>
+        public static readonly DependencyProperty GroupsProperty =
+            DependencyProperty.Register(nameof(Groups), typeof(ObservableCollection<DrawingObjectsGroup>), typeof(Canvas2D), new PropertyMetadata(default, OnGroupsChanged));
+
+        /// <summary>
+        /// Drawing objects groups
+        /// </summary>
+        public ObservableCollection<DrawingObjectsGroup> Groups
+        {
+            get => (ObservableCollection<DrawingObjectsGroup>)GetValue(GroupsProperty);
+            set => SetValue(GroupsProperty, value);
+        }
+
+        private static void OnGroupsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is Canvas2D canvas)
+            {
+                if (e.OldValue is ObservableCollection<DrawingObjectsGroup> oldValue)
+                {
+                    oldValue.CollectionChanged -= canvas!.Groups_CollectionChanged;
+                    canvas?.RemoveDrawingObjects(oldValue);
+                }
+                if (e.NewValue is ObservableCollection<DrawingObjectsGroup> newValue)
+                {
+                    newValue.CollectionChanged += canvas!.Groups_CollectionChanged;
+                    canvas?.AddDrawingObjects(newValue);
+                }
+            }
+        }
+
+        private void Groups_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems != null)
+                RemoveDrawingObjects(e.OldItems);
+            if (e.NewItems != null)
+                AddDrawingObjects(e.NewItems);
+        }
+
+        private void AddDrawingObjects(IEnumerable? groups)
+        {
+            foreach (DrawingObjectsGroup group in groups ?? Enumerable.Empty<DrawingObjectsGroup>())
+            {
+                foreach (DrawingObject drawingObject in group.GetDrawingObjectsToAdd() ?? Enumerable.Empty<DrawingObject>())
+                    Items.Add(drawingObject);
+            }
+        }
+
+        private void RemoveDrawingObjects(IEnumerable? groups)
+        {
+            foreach (DrawingObjectsGroup group in groups ?? Enumerable.Empty<DrawingObjectsGroup>())
+            {
+                group.UnregisterDrawingObjectsEvents();
+
+                foreach (DrawingObject drawingObject in group.GetDrawingObjectsToRemove() ?? Enumerable.Empty<DrawingObject>())
+                    Items.Remove(drawingObject);
+            }
         }
 
         /// <summary>
@@ -43,8 +107,8 @@ namespace Canvas2DNet
         /// </summary>
         public DrawingObjectsDataTemplateSelector DrawingObjectsDataTemplateSelector
         {
-            get { return (DrawingObjectsDataTemplateSelector)GetValue(DrawingObjectsDataTemplateSelectorProperty); }
-            set { SetValue(DrawingObjectsDataTemplateSelectorProperty, value); }
+            get => (DrawingObjectsDataTemplateSelector)GetValue(DrawingObjectsDataTemplateSelectorProperty); 
+            set => SetValue(DrawingObjectsDataTemplateSelectorProperty, value); 
         }
 
         /// <summary>
@@ -58,8 +122,8 @@ namespace Canvas2DNet
         /// </summary>
         public Canvas2DInteractions CanvasInteractions
         {
-            get { return (Canvas2DInteractions)GetValue(CanvasInteractionsProperty); }
-            set {  SetValue(CanvasInteractionsProperty, value); }
+            get => (Canvas2DInteractions)GetValue(CanvasInteractionsProperty);
+            set =>  SetValue(CanvasInteractionsProperty, value);
         }
 
         #endregion

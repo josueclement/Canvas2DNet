@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Canvas2DNet
 {
@@ -9,20 +8,13 @@ namespace Canvas2DNet
     /// </summary>
     public abstract class DrawingObjectsGroup : ObservableObject
     {
-        /// <summary>
-        /// Canvas drawing objects
-        /// </summary>
-        protected ObservableCollection<DrawingObject> _canvasDrawingObjects;
-
         #region Constructor
 
         /// <summary>
         /// Constructor for <see cref="DrawingObjectsGroup"/>
         /// </summary>
-        /// <param name="canvasDrawingObjects">Canvas drawing objects</param>
-        public DrawingObjectsGroup(ObservableCollection<DrawingObject> canvasDrawingObjects)
+        public DrawingObjectsGroup()
         {
-            _canvasDrawingObjects = canvasDrawingObjects;
             DrawingObjects = new List<DrawingObject>();
         }
 
@@ -33,41 +25,40 @@ namespace Canvas2DNet
         /// <summary>
         /// Drawing objects
         /// </summary>
-        public List<DrawingObject> DrawingObjects { get; private set; }
+        public List<DrawingObject> DrawingObjects { get; }
 
         #endregion
 
         #region Methods
 
         /// <summary>
-        /// Add the drawing objects to canvas
+        /// Get the drawing objects to add to the canvas
         /// </summary>
-        public void AddToCanvas()
-            => DrawingObjects?.ForEach(x => _canvasDrawingObjects?.Add(x));
+        public virtual IEnumerable<DrawingObject>? GetDrawingObjectsToAdd()
+            => DrawingObjects;
 
         /// <summary>
-        /// Remove the drawing objects from canvas
+        /// Get the drawing objects to remove from the canvas
         /// </summary>
-        public void RemoveFromCanvas()
-            => DrawingObjects?.ForEach(x => _canvasDrawingObjects?.Remove(x));
+        public virtual IEnumerable<DrawingObject>? GetDrawingObjectsToRemove()
+            => DrawingObjects;
+
+        /// <summary>
+        /// Unregister drawing objects events
+        /// </summary>
+        public virtual void UnregisterDrawingObjectsEvents() { }
 
         /// <summary>
         /// Show the drawing objects
         /// </summary>
-        public void Show()
+        public virtual void Show()
             => DrawingObjects?.ForEach(x => x.Visibility = System.Windows.Visibility.Visible);
 
         /// <summary>
         /// Hide the drawing objects
         /// </summary>
-        public void Hide()
+        public virtual void Hide()
             => DrawingObjects?.ForEach(x => x.Visibility = System.Windows.Visibility.Collapsed);
-
-        /// <summary>
-        /// Override this method to unregister 
-        /// </summary>
-        protected virtual void UnregisterEvents()
-        { }
 
         #endregion
     }

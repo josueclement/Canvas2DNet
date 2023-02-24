@@ -67,21 +67,20 @@ namespace Canvas2DNet.Interactions
                 _mouseOverObject = drawingObject;
                 _mouseOverObject.RaiseMouseEnter();
             }
-
-            if (_mouseOverObject != null)
+            else if (_mouseOverObject != null)
             {
                 if (drawingObject == null)
                 {
                     _mouseOverObject.RaiseMouseLeave();
                     _mouseOverObject = null;
                 }
-                if (drawingObject != null && _mouseOverObject != drawingObject)
+                else if (_mouseOverObject != drawingObject)
                 {
-                    _mouseOverObject!.RaiseMouseLeave();
+                    _mouseOverObject.RaiseMouseLeave();
                     _mouseOverObject = drawingObject;
                     _mouseOverObject.RaiseMouseEnter();
                 }
-                if (drawingObject != null && _mouseOverObject == drawingObject)
+                else
                 {
                     _mouseOverObject.RaiseMouseMovingOver(mousePosition);
                 }

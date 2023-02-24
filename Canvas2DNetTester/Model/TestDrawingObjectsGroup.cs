@@ -14,8 +14,7 @@ namespace Canvas2DNetTester.Model
 {
     public class TestDrawingObjectsGroup : DrawingObjectsGroup
     {
-        public TestDrawingObjectsGroup(ObservableCollection<DrawingObject> drawingObjects)
-            : base(drawingObjects)
+        public TestDrawingObjectsGroup()
         {
             Rectangle r1 = new Rectangle
             {
@@ -24,7 +23,8 @@ namespace Canvas2DNetTester.Model
                 Width = 20,
                 Height = 20,
                 Stroke = new SolidColorBrush(Colors.Yellow),
-                Fill = new SolidColorBrush(Colors.Black)
+                Fill = new SolidColorBrush(Colors.Black),
+                StrokeThickness = 1d
             };
             Rectangle r2 = new Rectangle
             {
@@ -33,12 +33,14 @@ namespace Canvas2DNetTester.Model
                 Width = 20,
                 Height = 20,
                 Stroke = new SolidColorBrush(Colors.Yellow),
-                Fill = new SolidColorBrush(Colors.Black)
+                Fill = new SolidColorBrush(Colors.Black),
+                StrokeThickness = 1d
             };
 
             r1.Clicked += (s, e) =>
             {
                 Debug.WriteLine($"CLICKED: {e}");
+                Clicked?.Invoke(this, EventArgs.Empty);
             };
 
             r1.Moving += (s, e) =>
@@ -73,8 +75,9 @@ namespace Canvas2DNetTester.Model
 
             DrawingObjects.Add(r1);
             DrawingObjects.Add(r2);
-
-            AddToCanvas();
         }
+
+        public event EventHandler? Clicked;
+        
     }
 }

@@ -126,17 +126,20 @@ namespace Canvas2DNet
             }
         }
 
-        ///// <summary>
-        ///// Get the objects DataContexts under the mouse cursor
-        ///// </summary>
-        ///// <param name="root">Root visual object</param>
-        ///// <param name="mousePosition">Mouse position on the root visual object</param>
-        ///// <returns></returns>
-        //protected IEnumerable<DrawingObject>? HitTestFullDataContext(Visual root, Point mousePosition)
-        //{
-        //    IEnumerable<DependencyObject>? objects = HitTestFull(root, mousePosition);
-
-        //}
+        /// <summary>
+        /// Get the objects DataContext under the mouse cursor
+        /// </summary>
+        /// <param name="root">Root visual object</param>
+        /// <param name="mousePosition">Mouse position on the root visual object</param>
+        /// <returns></returns>
+        protected IEnumerable<DrawingObject>? HitTestFullDataContext(Visual root, Point mousePosition)
+        {
+            foreach (DependencyObject obj in HitTestFull(root, mousePosition) ?? Enumerable.Empty<DependencyObject>())
+            {
+                if (obj is FrameworkElement element && element.DataContext is DrawingObject drawingObject)
+                    yield return drawingObject;
+            }
+        }
 
         private HitTestResultBehavior MyHitTestResult(HitTestResult result)
         {

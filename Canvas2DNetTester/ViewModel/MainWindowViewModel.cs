@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Media;
+using System.Linq;
 
 namespace Canvas2DNetTester.ViewModel
 {
@@ -16,51 +17,62 @@ namespace Canvas2DNetTester.ViewModel
             Interactions = new StandardInteractions();
             DrawingObjectsDataTemplateSelector.AddDataTemplate(typeof(TestObject), typeof(TestObjectView));
 
-            MyItems.Add(new Rectangle
-            {
-                X = 100,
-                Y = 100,
-                Width = 200,
-                Height = 100,
-                Fill = new SolidColorBrush(Colors.DeepSkyBlue)
-            });
-            MyItems.Add(new Line
-            {
-                Ax = 20,
-                Ay = 20,
-                Bx = 100,
-                By = 30,
-                Stroke = new SolidColorBrush(Colors.Black)
-            });
-            MyItems.Add(new Ellipse
-            {
-                X = 130,
-                Y = 20,
-                Width = 40,
-                Height = 20,
-                Stroke = new SolidColorBrush(Colors.Black)
-            });
-            MyItems.Add(new Path
-            {
-                X = 190,
-                Y = 20,
-                Width = 50,
-                Height = 50,
-                StrokeThickness = new Thickness(1),
-                Stroke = new SolidColorBrush(Colors.Black),
-                Fill = new SolidColorBrush(Colors.Red),
-                Data = GetGeometry()
-            });
-            MyItems.Add(new TestObject
-            {
-                X = 300,
-                Y = 300,
-                Width = 100,
-                Height = 25,
-                Content = "Blah"
-            });
+            //MyItems.Add(new Rectangle
+            //{
+            //    X = 100,
+            //    Y = 100,
+            //    Width = 200,
+            //    Height = 100,
+            //    Fill = new SolidColorBrush(Colors.DeepSkyBlue)
+            //});
+            //MyItems.Add(new Line
+            //{
+            //    Ax = 20,
+            //    Ay = 20,
+            //    Bx = 100,
+            //    By = 30,
+            //    Stroke = new SolidColorBrush(Colors.Black)
+            //});
+            //MyItems.Add(new Ellipse
+            //{
+            //    X = 130,
+            //    Y = 20,
+            //    Width = 40,
+            //    Height = 20,
+            //    Stroke = new SolidColorBrush(Colors.Black)
+            //});
+            //MyItems.Add(new Path
+            //{
+            //    X = 190,
+            //    Y = 20,
+            //    Width = 50,
+            //    Height = 50,
+            //    StrokeThickness = new Thickness(1),
+            //    Stroke = new SolidColorBrush(Colors.Black),
+            //    Fill = new SolidColorBrush(Colors.Red),
+            //    Data = GetGeometry()
+            //});
+            //MyItems.Add(new TestObject
+            //{
+            //    X = 300,
+            //    Y = 300,
+            //    Width = 100,
+            //    Height = 25,
+            //    Content = "Blah"
+            //});
 
-            TestDrawingObjectsGroup testGroup = new TestDrawingObjectsGroup(MyItems);
+            TestDrawingObjectsGroup testGroup = new TestDrawingObjectsGroup();
+            testGroup.Clicked += TestGroup_Clicked;
+            MyGroups.Add(testGroup);
+        }
+
+        private void TestGroup_Clicked(object? sender, System.EventArgs e)
+        {
+            TestDrawingObjectsGroup2? existingItem = MyGroups.OfType<TestDrawingObjectsGroup2>().FirstOrDefault();
+            if (existingItem == null)
+                MyGroups.Add(new TestDrawingObjectsGroup2());
+            else
+                MyGroups.Remove(existingItem);
         }
 
         private Geometry GetGeometry()
@@ -81,6 +93,7 @@ namespace Canvas2DNetTester.ViewModel
         }
 
         public ObservableCollection<DrawingObject> MyItems { get; set; } = new ObservableCollection<DrawingObject>();
+        public ObservableCollection<DrawingObjectsGroup> MyGroups { get; set; } = new ObservableCollection<DrawingObjectsGroup>();
         public DrawingObjectsDataTemplateSelector DrawingObjectsDataTemplateSelector { get; set; } = new DrawingObjectsDataTemplateSelector();
 
         public Canvas2DInteractions? Interactions

@@ -200,11 +200,11 @@ namespace Canvas2DNet
         /// <summary>
         /// Mouse position
         /// </summary>
-        public Point MousePosition { get; private set; }
+        public Point MousePosition { get; }
         /// <summary>
         /// Offset from last position
         /// </summary>
-        public Vector Offset { get; private set; }
+        public Vector Offset { get; }
     }
 
     /// <summary>
