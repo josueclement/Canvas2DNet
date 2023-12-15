@@ -15,51 +15,51 @@ namespace Canvas2DNetTester.ViewModel
         public MainWindowViewModel()
         {
             Interactions = new StandardInteractions();
-            DrawingObjectsDataTemplateSelector.AddDataTemplate(typeof(TestObject), typeof(TestObjectView));
+            DrawingObjectsDataTemplateSelector.RegisterDataTemplate(typeof(TestObject), typeof(TestObjectView));
 
-            //MyItems.Add(new Rectangle
-            //{
-            //    X = 100,
-            //    Y = 100,
-            //    Width = 200,
-            //    Height = 100,
-            //    Fill = new SolidColorBrush(Colors.DeepSkyBlue)
-            //});
-            //MyItems.Add(new Line
-            //{
-            //    Ax = 20,
-            //    Ay = 20,
-            //    Bx = 100,
-            //    By = 30,
-            //    Stroke = new SolidColorBrush(Colors.Black)
-            //});
-            //MyItems.Add(new Ellipse
-            //{
-            //    X = 130,
-            //    Y = 20,
-            //    Width = 40,
-            //    Height = 20,
-            //    Stroke = new SolidColorBrush(Colors.Black)
-            //});
-            //MyItems.Add(new Path
-            //{
-            //    X = 190,
-            //    Y = 20,
-            //    Width = 50,
-            //    Height = 50,
-            //    StrokeThickness = new Thickness(1),
-            //    Stroke = new SolidColorBrush(Colors.Black),
-            //    Fill = new SolidColorBrush(Colors.Red),
-            //    Data = GetGeometry()
-            //});
-            //MyItems.Add(new TestObject
-            //{
-            //    X = 300,
-            //    Y = 300,
-            //    Width = 100,
-            //    Height = 25,
-            //    Content = "Blah"
-            //});
+            MyItems.Add(new Rectangle
+            {
+                X = 100,
+                Y = 100,
+                Width = 200,
+                Height = 100,
+                Fill = new SolidColorBrush(Colors.DeepSkyBlue)
+            });
+            MyItems.Add(new Line
+            {
+                Ax = 20,
+                Ay = 20,
+                Bx = 100,
+                By = 30,
+                Stroke = new SolidColorBrush(Colors.Black)
+            });
+            MyItems.Add(new Ellipse
+            {
+                X = 130,
+                Y = 20,
+                Width = 40,
+                Height = 20,
+                Stroke = new SolidColorBrush(Colors.Black)
+            });
+            MyItems.Add(new Path
+            {
+                X = 190,
+                Y = 20,
+                Width = 50,
+                Height = 50,
+                StrokeThickness = 1.0,
+                Stroke = new SolidColorBrush(Colors.Black),
+                Fill = new SolidColorBrush(Colors.Red),
+                Data = GetGeometry()
+            });
+            MyItems.Add(new TestObject
+            {
+                X = 300,
+                Y = 300,
+                Width = 100,
+                Height = 25,
+                Content = "Blah"
+            });
 
             TestDrawingObjectsGroup testGroup = new TestDrawingObjectsGroup();
             testGroup.Clicked += TestGroup_Clicked;

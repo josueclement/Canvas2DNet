@@ -66,6 +66,11 @@ namespace Canvas2DNet
                     defaultValue: new ObservableCollection<DrawingObjectsGroup>(),
                     propertyChangedCallback: OnDrawingObjectsGroupsPropertyChanged));
 
+        /// <summary>
+        /// Called when <see cref="DrawingObjectsGroupsProperty"/> has changed
+        /// </summary>
+        /// <param name="obj">Canvas</param>
+        /// <param name="args">Event args</param>
         private static void OnDrawingObjectsGroupsPropertyChanged(
             DependencyObject obj,
             DependencyPropertyChangedEventArgs args)
@@ -75,25 +80,50 @@ namespace Canvas2DNet
                 if (args.OldValue is ObservableCollection<DrawingObjectsGroup> oldValue)
                 {
                     oldValue.CollectionChanged -= canvas.OnDrawingObjectsGroupsChanged;
-                    canvas.RemoveDrawingObjects(oldValue);
+                    canvas.RemoveGroupsDrawingObjects(oldValue);
                 }
 
                 if (args.NewValue is ObservableCollection<DrawingObjectsGroup> newValue)
                 {
                     newValue.CollectionChanged += canvas.OnDrawingObjectsGroupsChanged;
-                    canvas.AddDrawingObjects(newValue);
+                    canvas.AddGroupsDrawingObjects(newValue);
                 }
             }
         }
 
+        /// <summary>
+        /// Called when <see cref="DrawingObjectsGroups"/> has changed
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="args">Event args</param>
         private void OnDrawingObjectsGroupsChanged(
             object? sender,
-            System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+            System.Collections.Specialized.NotifyCollectionChangedEventArgs args)
         {
-            if (e.OldItems != null)
-                RemoveDrawingObjects(e.OldItems);
-            if (e.NewItems != null)
-                AddDrawingObjects(e.NewItems);
+            if (args.OldItems != null)
+                RemoveGroupsDrawingObjects(args.OldItems);
+            if (args.NewItems != null)
+                AddGroupsDrawingObjects(args.NewItems);
+        }
+
+        private void AddGroupsDrawingObjects(IEnumerable? groups)
+        {
+            foreach (DrawingObjectsGroup group in groups ?? Enumerable.Empty<DrawingObjectsGroup>())
+            {
+                foreach (DrawingObject drawingObject in group.DrawingObjects)
+                    DrawingObjects?.Add(drawingObject);
+            }
+        }
+        
+        private void RemoveGroupsDrawingObjects(IEnumerable? groups)
+        {
+            foreach (DrawingObjectsGroup group in groups ?? Enumerable.Empty<DrawingObjectsGroup>())
+            {
+                group.UnregisterDrawingObjectsEvents();
+        
+                foreach (DrawingObject drawingObject in group.DrawingObjects)
+                    DrawingObjects?.Remove(drawingObject);
+            }
         }
         
         #endregion
@@ -144,30 +174,6 @@ namespace Canvas2DNet
                 ownerType: typeof(Canvas2D),
                 typeMetadata: new PropertyMetadata(defaultValue: null));
         
-        #endregion
-
-        #region Dependency properties
-
-        private void AddDrawingObjects(IEnumerable? groups)
-        {
-            foreach (DrawingObjectsGroup group in groups ?? Enumerable.Empty<DrawingObjectsGroup>())
-            {
-                foreach (DrawingObject drawingObject in group.GetDrawingObjectsToAdd() ?? Enumerable.Empty<DrawingObject>())
-                    DrawingObjects?.Add(drawingObject);
-            }
-        }
-        
-        private void RemoveDrawingObjects(IEnumerable? groups)
-        {
-            foreach (DrawingObjectsGroup group in groups ?? Enumerable.Empty<DrawingObjectsGroup>())
-            {
-                group.UnregisterDrawingObjectsEvents();
-        
-                foreach (DrawingObject drawingObject in group.GetDrawingObjectsToRemove() ?? Enumerable.Empty<DrawingObject>())
-                    DrawingObjects?.Remove(drawingObject);
-            }
-        }
-
         #endregion
 
         #region Mouse-Keyboard events handlers

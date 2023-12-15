@@ -13,7 +13,7 @@ namespace Canvas2DNet
         /// <summary>
         /// Constructor for <see cref="DrawingObjectsGroup"/>
         /// </summary>
-        public DrawingObjectsGroup()
+        protected DrawingObjectsGroup()
         {
             DrawingObjects = new List<DrawingObject>();
         }
@@ -32,18 +32,6 @@ namespace Canvas2DNet
         #region Methods
 
         /// <summary>
-        /// Get the drawing objects to add to the canvas
-        /// </summary>
-        public virtual IEnumerable<DrawingObject>? GetDrawingObjectsToAdd()
-            => DrawingObjects;
-
-        /// <summary>
-        /// Get the drawing objects to remove from the canvas
-        /// </summary>
-        public virtual IEnumerable<DrawingObject>? GetDrawingObjectsToRemove()
-            => DrawingObjects;
-
-        /// <summary>
         /// Unregister drawing objects events
         /// </summary>
         public virtual void UnregisterDrawingObjectsEvents() { }
@@ -52,13 +40,13 @@ namespace Canvas2DNet
         /// Show the drawing objects
         /// </summary>
         public virtual void Show()
-            => DrawingObjects?.ForEach(x => x.Visibility = System.Windows.Visibility.Visible);
+            => DrawingObjects.ForEach(x => x.Visibility = System.Windows.Visibility.Visible);
 
         /// <summary>
         /// Hide the drawing objects
         /// </summary>
         public virtual void Hide()
-            => DrawingObjects?.ForEach(x => x.Visibility = System.Windows.Visibility.Collapsed);
+            => DrawingObjects.ForEach(x => x.Visibility = System.Windows.Visibility.Collapsed);
 
         #endregion
     }

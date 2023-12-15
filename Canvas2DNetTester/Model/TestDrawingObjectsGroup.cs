@@ -1,13 +1,7 @@
 ﻿using Canvas2DNet;
 using Canvas2DNet.DrawingObjects;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media;
 
 namespace Canvas2DNetTester.Model
@@ -37,13 +31,13 @@ namespace Canvas2DNetTester.Model
                 StrokeThickness = 1d
             };
 
-            r1.Clicked += (s, e) =>
+            r1.Clicked += (_, e) =>
             {
                 Debug.WriteLine($"CLICKED: {e}");
                 Clicked?.Invoke(this, EventArgs.Empty);
             };
 
-            r1.Moving += (s, e) =>
+            r1.Moving += (_, e) =>
             {
                 r1.X += e.Offset.X;
                 r1.Y += e.Offset.Y;
@@ -51,24 +45,24 @@ namespace Canvas2DNetTester.Model
                 r2.Y += e.Offset.Y;
             };
 
-            r1.Moved += (s, e) =>
+            r1.Moved += (_, e) =>
             {
                 Debug.WriteLine($"MOVED: {e}");
             };
 
-            r1.MouseEnter += (s, e) =>
+            r1.MouseEnter += (_, _) =>
             {
                 r1.Stroke = new SolidColorBrush(Colors.Red);
                 Debug.WriteLine($"MOUSEENTER");
             };
 
-            r1.MouseLeave += (s, e) =>
+            r1.MouseLeave += (_, _) =>
             {
                 r1.Stroke = new SolidColorBrush(Colors.Yellow);
                 Debug.WriteLine($"MOUSELEAVE");
             };
 
-            r1.MouseMovingOver += (s, e) =>
+            r1.MouseMovingOver += (_, e) =>
             {
                 Debug.WriteLine($"MOUSEMOVINGOVER: {e}");
             };
