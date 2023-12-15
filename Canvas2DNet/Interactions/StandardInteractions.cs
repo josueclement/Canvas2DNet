@@ -11,25 +11,25 @@ namespace Canvas2DNet.Interactions
         /// <summary>
         /// Moving object
         /// </summary>
-        protected DrawingObject? _movingObject;
+        private DrawingObject? _movingObject;
 
         /// <summary>
         /// Moving position
         /// </summary>
-        protected Point _movingPosition;
+        private Point _movingPosition;
 
         /// <summary>
         /// Object under the mouse cursor
         /// </summary>
-        protected DrawingObject? _mouseOverObject;
+        private DrawingObject? _mouseOverObject;
 
         /// <inheritdoc/>
-        public override void OnMouseDown(MouseButtonEventArgs e, Canvas2D canvas)
+        public override void OnMouseDown(Canvas2D canvas, MouseButtonEventArgs args)
         {
-            Point mousePosition = e.GetPosition(canvas);
+            Point mousePosition = args.GetPosition(canvas);
             DrawingObject? drawingObject = HitTestDataContext(canvas, mousePosition);
 
-            if (e.ChangedButton == MouseButton.Left && drawingObject != null)
+            if (args.ChangedButton == MouseButton.Left && drawingObject != null)
             {
                 _movingObject = drawingObject;
                 _movingPosition = mousePosition;
@@ -38,11 +38,11 @@ namespace Canvas2DNet.Interactions
         }
 
         /// <inheritdoc/>
-        public override void OnMouseUp(MouseButtonEventArgs e, Canvas2D canvas)
+        public override void OnMouseUp(Canvas2D canvas, MouseButtonEventArgs args)
         {
-            Point mousePosition = e.GetPosition(canvas);
+            Point mousePosition = args.GetPosition(canvas);
 
-            if (e.ChangedButton == MouseButton.Left && _movingObject != null)
+            if (args.ChangedButton == MouseButton.Left && _movingObject != null)
             {
                 _movingObject.RaiseMoved(mousePosition, mousePosition - _movingPosition);
                 _movingObject = null;
@@ -50,9 +50,9 @@ namespace Canvas2DNet.Interactions
         }
 
         /// <inheritdoc/>
-        public override void OnMouseMove(MouseEventArgs e, Canvas2D canvas)
+        public override void OnMouseMove(Canvas2D canvas, MouseEventArgs args)
         {
-            Point mousePosition = e.GetPosition(canvas);
+            Point mousePosition = args.GetPosition(canvas);
             if (_movingObject != null)
             {
                 _movingObject.RaiseMoving(mousePosition, mousePosition - _movingPosition);

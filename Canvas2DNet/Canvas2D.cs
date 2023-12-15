@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,112 +17,155 @@ namespace Canvas2DNet
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Canvas2D), new FrameworkPropertyMetadata(typeof(Canvas2D)));
         }
-
-        #region Dependency properties
-
-        /// <summary>
-        /// Drawing objects dependency property
-        /// </summary>
-        public static readonly DependencyProperty ItemsProperty =
-            DependencyProperty.Register(nameof(Items), typeof(ObservableCollection<DrawingObject>), typeof(Canvas2D), new PropertyMetadata(new ObservableCollection<DrawingObject>()));
+        
+        #region DrawingObjects
 
         /// <summary>
-        /// Drawing objects
+        /// DrawingObjects
         /// </summary>
-        public ObservableCollection<DrawingObject> Items
+        [Bindable(true)]
+        public ObservableCollection<DrawingObject>? DrawingObjects
         {
-            get => (ObservableCollection<DrawingObject>)GetValue(ItemsProperty); 
-            set => SetValue(ItemsProperty, value); 
+            get => (ObservableCollection<DrawingObject>?)GetValue(DrawingObjectsProperty);
+            set => SetValue(DrawingObjectsProperty, value);
         }
 
         /// <summary>
-        /// Drawing objects groups dependency property
+        /// DrawingObjects property
         /// </summary>
-        public static readonly DependencyProperty GroupsProperty =
-            DependencyProperty.Register(nameof(Groups), typeof(ObservableCollection<DrawingObjectsGroup>), typeof(Canvas2D), new PropertyMetadata(default, OnGroupsChanged));
+        public static readonly DependencyProperty DrawingObjectsProperty =
+            DependencyProperty.Register(
+                name: nameof(DrawingObjects),
+                propertyType: typeof(ObservableCollection<DrawingObject>),
+                ownerType: typeof(Canvas2D),
+                typeMetadata: new PropertyMetadata(new ObservableCollection<DrawingObject>()));
+        
+        #endregion
+        
+        #region DrawingObjectsGroups
 
         /// <summary>
-        /// Drawing objects groups
+        /// DrawingObjectsGroups
         /// </summary>
-        public ObservableCollection<DrawingObjectsGroup> Groups
+        [Bindable(true)]
+        public ObservableCollection<DrawingObjectsGroup>? DrawingObjectsGroups
         {
-            get => (ObservableCollection<DrawingObjectsGroup>)GetValue(GroupsProperty);
-            set => SetValue(GroupsProperty, value);
+            get => (ObservableCollection<DrawingObjectsGroup>?)GetValue(DrawingObjectsGroupsProperty);
+            set => SetValue(DrawingObjectsGroupsProperty, value);
         }
 
-        private static void OnGroupsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        /// <summary>
+        /// DrawingObjectsGroups property
+        /// </summary>
+        public static readonly DependencyProperty DrawingObjectsGroupsProperty =
+            DependencyProperty.Register(
+                name: nameof(DrawingObjectsGroups),
+                propertyType: typeof(ObservableCollection<DrawingObjectsGroup>),
+                ownerType: typeof(Canvas2D),
+                typeMetadata: new PropertyMetadata(
+                    defaultValue: new ObservableCollection<DrawingObjectsGroup>(),
+                    propertyChangedCallback: OnDrawingObjectsGroupsPropertyChanged));
+
+        private static void OnDrawingObjectsGroupsPropertyChanged(
+            DependencyObject obj,
+            DependencyPropertyChangedEventArgs args)
         {
-            if (d is Canvas2D canvas)
+            if (obj is Canvas2D canvas)
             {
-                if (e.OldValue is ObservableCollection<DrawingObjectsGroup> oldValue)
+                if (args.OldValue is ObservableCollection<DrawingObjectsGroup> oldValue)
                 {
-                    oldValue.CollectionChanged -= canvas!.Groups_CollectionChanged;
-                    canvas?.RemoveDrawingObjects(oldValue);
+                    oldValue.CollectionChanged -= canvas.OnDrawingObjectsGroupsChanged;
+                    canvas.RemoveDrawingObjects(oldValue);
                 }
-                if (e.NewValue is ObservableCollection<DrawingObjectsGroup> newValue)
+
+                if (args.NewValue is ObservableCollection<DrawingObjectsGroup> newValue)
                 {
-                    newValue.CollectionChanged += canvas!.Groups_CollectionChanged;
-                    canvas?.AddDrawingObjects(newValue);
+                    newValue.CollectionChanged += canvas.OnDrawingObjectsGroupsChanged;
+                    canvas.AddDrawingObjects(newValue);
                 }
             }
         }
 
-        private void Groups_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void OnDrawingObjectsGroupsChanged(
+            object? sender,
+            System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.OldItems != null)
                 RemoveDrawingObjects(e.OldItems);
             if (e.NewItems != null)
                 AddDrawingObjects(e.NewItems);
         }
+        
+        #endregion
+        
+        #region DrawingObjectsDataTemplateSelector
 
-        private void AddDrawingObjects(IEnumerable? groups)
+        /// <summary>
+        /// DrawingObjectsDataTemplateSelector
+        /// </summary>
+        [Bindable(true)]
+        public DrawingObjectsDataTemplateSelector? DrawingObjectsDataTemplateSelector
         {
-            foreach (DrawingObjectsGroup group in groups ?? Enumerable.Empty<DrawingObjectsGroup>())
-            {
-                foreach (DrawingObject drawingObject in group.GetDrawingObjectsToAdd() ?? Enumerable.Empty<DrawingObject>())
-                    Items.Add(drawingObject);
-            }
-        }
-
-        private void RemoveDrawingObjects(IEnumerable? groups)
-        {
-            foreach (DrawingObjectsGroup group in groups ?? Enumerable.Empty<DrawingObjectsGroup>())
-            {
-                group.UnregisterDrawingObjectsEvents();
-
-                foreach (DrawingObject drawingObject in group.GetDrawingObjectsToRemove() ?? Enumerable.Empty<DrawingObject>())
-                    Items.Remove(drawingObject);
-            }
+            get => (DrawingObjectsDataTemplateSelector?)GetValue(DrawingObjectsDataTemplateSelectorProperty); 
+            set => SetValue(DrawingObjectsDataTemplateSelectorProperty, value); 
         }
 
         /// <summary>
-        /// Drawing objects DataTemplateSelector dependency property
+        /// DrawingObjectsDataTemplateSelectorProperty
         /// </summary>
         public static readonly DependencyProperty DrawingObjectsDataTemplateSelectorProperty =
-            DependencyProperty.Register(nameof(DrawingObjectsDataTemplateSelector), typeof(DrawingObjectsDataTemplateSelector), typeof(Canvas2D), new PropertyMetadata(default));
+            DependencyProperty.Register(
+                name: nameof(DrawingObjectsDataTemplateSelector),
+                propertyType: typeof(DrawingObjectsDataTemplateSelector),
+                ownerType: typeof(Canvas2D),
+                typeMetadata: new PropertyMetadata(defaultValue: null));
+        
+        #endregion
+        
+        #region CanvasInteractions
 
         /// <summary>
-        /// Drawing objects DataTemplateSelector
+        /// Canvas interactions
         /// </summary>
-        public DrawingObjectsDataTemplateSelector DrawingObjectsDataTemplateSelector
+        [Bindable(true)]
+        public Canvas2DInteractions? CanvasInteractions
         {
-            get => (DrawingObjectsDataTemplateSelector)GetValue(DrawingObjectsDataTemplateSelectorProperty); 
-            set => SetValue(DrawingObjectsDataTemplateSelectorProperty, value); 
+            get => (Canvas2DInteractions?)GetValue(CanvasInteractionsProperty);
+            set =>  SetValue(CanvasInteractionsProperty, value);
         }
 
         /// <summary>
         /// Canvas interactions dependency property
         /// </summary>
         public static readonly DependencyProperty CanvasInteractionsProperty =
-            DependencyProperty.Register(nameof(CanvasInteractions), typeof(Canvas2DInteractions), typeof(Canvas2D), new PropertyMetadata(default));
+            DependencyProperty.Register(
+                name: nameof(CanvasInteractions),
+                propertyType: typeof(Canvas2DInteractions),
+                ownerType: typeof(Canvas2D),
+                typeMetadata: new PropertyMetadata(defaultValue: null));
+        
+        #endregion
 
-        /// <summary>
-        /// Canvas interactions
-        /// </summary>
-        public Canvas2DInteractions CanvasInteractions
+        #region Dependency properties
+
+        private void AddDrawingObjects(IEnumerable? groups)
         {
-            get => (Canvas2DInteractions)GetValue(CanvasInteractionsProperty);
-            set =>  SetValue(CanvasInteractionsProperty, value);
+            foreach (DrawingObjectsGroup group in groups ?? Enumerable.Empty<DrawingObjectsGroup>())
+            {
+                foreach (DrawingObject drawingObject in group.GetDrawingObjectsToAdd() ?? Enumerable.Empty<DrawingObject>())
+                    DrawingObjects?.Add(drawingObject);
+            }
+        }
+        
+        private void RemoveDrawingObjects(IEnumerable? groups)
+        {
+            foreach (DrawingObjectsGroup group in groups ?? Enumerable.Empty<DrawingObjectsGroup>())
+            {
+                group.UnregisterDrawingObjectsEvents();
+        
+                foreach (DrawingObject drawingObject in group.GetDrawingObjectsToRemove() ?? Enumerable.Empty<DrawingObject>())
+                    DrawingObjects?.Remove(drawingObject);
+            }
         }
 
         #endregion
@@ -131,72 +173,72 @@ namespace Canvas2DNet
         #region Mouse-Keyboard events handlers
 
         /// <inheritdoc/>
-        protected override void OnMouseDown(MouseButtonEventArgs e)
-            => CanvasInteractions?.OnMouseDown(e, this);
+        protected override void OnMouseDown(MouseButtonEventArgs args)
+            => CanvasInteractions?.OnMouseDown(this, args);
 
         /// <inheritdoc/>
-        protected override void OnMouseUp(MouseButtonEventArgs e)
-            => CanvasInteractions?.OnMouseUp(e, this);
+        protected override void OnMouseUp(MouseButtonEventArgs args)
+            => CanvasInteractions?.OnMouseUp(this, args);
 
         /// <inheritdoc/>
-        protected override void OnMouseDoubleClick(MouseButtonEventArgs e)
-            => CanvasInteractions?.OnMouseDoubleClick(e, this);
+        protected override void OnMouseDoubleClick(MouseButtonEventArgs args)
+            => CanvasInteractions?.OnMouseDoubleClick(this, args);
 
         /// <inheritdoc/>
-        protected override void OnMouseWheel(MouseWheelEventArgs e)
-            => CanvasInteractions?.OnMouseWheel(e, this);
+        protected override void OnMouseWheel(MouseWheelEventArgs args)
+            => CanvasInteractions?.OnMouseWheel(this, args);
 
         /// <inheritdoc/>
-        protected override void OnMouseMove(MouseEventArgs e)
-            => CanvasInteractions?.OnMouseMove(e, this);
+        protected override void OnMouseMove(MouseEventArgs args)
+            => CanvasInteractions?.OnMouseMove(this, args);
 
         /// <inheritdoc/>
-        protected override void OnMouseEnter(MouseEventArgs e)
-            => CanvasInteractions?.OnMouseEnter(e, this);
+        protected override void OnMouseEnter(MouseEventArgs args)
+            => CanvasInteractions?.OnMouseEnter(this, args);
 
         /// <inheritdoc/>
-        protected override void OnMouseLeave(MouseEventArgs e)
-            => CanvasInteractions?.OnMouseLeave(e, this);
+        protected override void OnMouseLeave(MouseEventArgs args)
+            => CanvasInteractions?.OnMouseLeave(this, args);
 
         /// <inheritdoc/>
-        protected override void OnKeyDown(KeyEventArgs e)
-            => CanvasInteractions?.OnKeyDown(e, this);
+        protected override void OnKeyDown(KeyEventArgs args)
+            => CanvasInteractions?.OnKeyDown(this, args);
 
         /// <inheritdoc/>
-        protected override void OnKeyUp(KeyEventArgs e)
-            => CanvasInteractions?.OnKeyUp(e, this);
+        protected override void OnKeyUp(KeyEventArgs args)
+            => CanvasInteractions?.OnKeyUp(this, args);
 
         /// <inheritdoc/>
-        protected override void OnPreviewDragEnter(DragEventArgs e)
-            => CanvasInteractions?.OnPreviewDragEnter(e, this);
+        protected override void OnPreviewDragEnter(DragEventArgs args)
+            => CanvasInteractions?.OnPreviewDragEnter(this, args);
 
         /// <inheritdoc/>
-        protected override void OnPreviewDragLeave(DragEventArgs e)
-            => CanvasInteractions?.OnPreviewDragLeave(e, this);
+        protected override void OnPreviewDragLeave(DragEventArgs args)
+            => CanvasInteractions?.OnPreviewDragLeave(this, args);
 
         /// <inheritdoc/>
-        protected override void OnPreviewDragOver(DragEventArgs e)
-            => CanvasInteractions?.OnPreviewDragOver(e, this);
+        protected override void OnPreviewDragOver(DragEventArgs args)
+            => CanvasInteractions?.OnPreviewDragOver(this, args);
 
         /// <inheritdoc/>
-        protected override void OnPreviewDrop(DragEventArgs e)
-            => CanvasInteractions?.OnPreviewDrop(e, this);
+        protected override void OnPreviewDrop(DragEventArgs args)
+            => CanvasInteractions?.OnPreviewDrop(this, args);
 
         /// <inheritdoc/>
-        protected override void OnDragEnter(DragEventArgs e)
-            => CanvasInteractions?.OnDragEnter(e, this);
+        protected override void OnDragEnter(DragEventArgs args)
+            => CanvasInteractions?.OnDragEnter(this, args);
 
         /// <inheritdoc/>
-        protected override void OnDragLeave(DragEventArgs e)
-            => CanvasInteractions?.OnDragLeave(e, this);
+        protected override void OnDragLeave(DragEventArgs args)
+            => CanvasInteractions?.OnDragLeave(this, args);
 
         /// <inheritdoc/>
-        protected override void OnDragOver(DragEventArgs e)
-            => CanvasInteractions?.OnDragOver(e, this);
+        protected override void OnDragOver(DragEventArgs args)
+            => CanvasInteractions?.OnDragOver(this, args);
 
         /// <inheritdoc/>
-        protected override void OnDrop(DragEventArgs e)
-            => CanvasInteractions?.OnDrop(e, this);
+        protected override void OnDrop(DragEventArgs args)
+            => CanvasInteractions?.OnDrop(this, args);
 
         #endregion
     }

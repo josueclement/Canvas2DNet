@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <TargetFrameworks>net472;net6.0-windows;net7.0-windows</TargetFrameworks>
+	  <TargetFrameworks>net6.0-windows;net7.0-windows;net472;net8.0-windows</TargetFrameworks>
 	  <UseWPF>true</UseWPF>
 	  <Nullable>enable</Nullable>
 	  <Platforms>AnyCPU</Platforms>
@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
   </ItemGroup>
 
 </Project>

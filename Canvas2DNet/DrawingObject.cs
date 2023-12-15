@@ -212,5 +212,5 @@ namespace Canvas2DNet
     /// </summary>
     /// <param name="sender">Sender</param>
     /// <param name="args">Mouse movement args</param>
-    public delegate  void MouseMovementEventHandler(object sender, MouseMovementEventArgs args);
+    public delegate void MouseMovementEventHandler(object sender, MouseMovementEventArgs args);
 }
