@@ -2,21 +2,21 @@
 using System.Windows.Markup;
 using System.Windows;
 
-namespace Canvas2DNet.Utils
+namespace Canvas2DNet.Utils;
+
+/// <summary>
+/// Helper class for DataTemplates
+/// </summary>
+public static class DataTemplateHelper
 {
     /// <summary>
-    /// Helper class for DataTemplates
+    /// Create a DataTemplate based on the ViewModel type and the View type
     /// </summary>
-    public static class DataTemplateHelper
+    /// <param name="viewModelType">ViewModel type</param>
+    /// <param name="viewType">View type</param>
+    /// <returns>DataTemplate</returns>
+    public static DataTemplate CreateDataTemplate(Type viewModelType, Type viewType)
     {
-        /// <summary>
-        /// Create a DataTemplate based on the ViewModel type and the View type
-        /// </summary>
-        /// <param name="viewModelType">ViewModel type</param>
-        /// <param name="viewType">View type</param>
-        /// <returns>DataTemplate</returns>
-        public static DataTemplate CreateDataTemplate(Type viewModelType, Type viewType)
-        {
             const string xamlTemplate = "<DataTemplate DataType=\"{{x:Type vm:{0}}}\"><v:{1} /></DataTemplate>";
             var xaml = string.Format(xamlTemplate, viewModelType.Name, viewType.Name);
 
@@ -38,5 +38,4 @@ namespace Canvas2DNet.Utils
             var template = (DataTemplate)XamlReader.Parse(xaml, context);
             return template;
         }
-    }
 }

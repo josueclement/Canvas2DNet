@@ -14,26 +14,25 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Canvas2DNetTester
-{
-    /// <summary>
-    /// Interaction logic for TestObjectView.xaml
-    /// </summary>
-    public partial class TestObjectView : UserControl
-    {
-        public TestObjectView()
-        {
-            InitializeComponent();
-        }
-    }
+namespace Canvas2DNetTester;
 
-    public class TestObject : DrawingObject
+/// <summary>
+/// Interaction logic for TestObjectView.xaml
+/// </summary>
+public partial class TestObjectView : UserControl
+{
+    public TestObjectView()
     {
-        public object? Content
-        {
-            get => _content;
-            set => SetProperty(ref _content, value);
-        }
-        private object? _content;
+        InitializeComponent();
     }
+}
+
+public class TestObject : DrawingObject
+{
+    public object? Content
+    {
+        get => _content;
+        set => SetProperty(ref _content, value);
+    }
+    private object? _content;
 }
