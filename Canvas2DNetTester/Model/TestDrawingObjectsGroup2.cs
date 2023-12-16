@@ -1,28 +1,22 @@
 ﻿using Canvas2DNet;
 using Canvas2DNet.DrawingObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace Canvas2DNetTester.Model
-{
-    public class TestDrawingObjectsGroup2 : DrawingObjectsGroup
-    {
-        public TestDrawingObjectsGroup2()
-        {
-            Rectangle rect = new Rectangle
-            {
-                X = 0,
-                Y = 0,
-                Width = 10,
-                Height = 10,
-                Fill = new SolidColorBrush(Colors.Brown)
-            };
+namespace Canvas2DNetTester.Model;
 
-            DrawingObjects.Add(rect);
-        }
+public class TestDrawingObjectsGroup2 : DrawingObjectsGroup
+{
+    public TestDrawingObjectsGroup2()
+    {
+        Rectangle rect = new Rectangle
+        {
+            X = 0,
+            Y = 0,
+            Width = 10,
+            Height = 10,
+            Fill = new SolidColorBrush(Colors.Brown)
+        };
+
+        DrawingObjects.Add(rect);
     }
 }

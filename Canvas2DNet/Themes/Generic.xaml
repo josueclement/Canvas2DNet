@@ -6,7 +6,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:Canvas2D}">
-                    <ItemsControl ItemsSource="{TemplateBinding Items}"
+                    <ItemsControl ItemsSource="{TemplateBinding DrawingObjects}"
                                   ItemTemplateSelector="{TemplateBinding DrawingObjectsDataTemplateSelector}"
                                   Background="{TemplateBinding Background}"
                                   ClipToBounds="True">
