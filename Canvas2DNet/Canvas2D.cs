@@ -172,7 +172,22 @@ namespace Canvas2DNet
                 name: nameof(CanvasInteractions),
                 propertyType: typeof(Canvas2DInteractions),
                 ownerType: typeof(Canvas2D),
-                typeMetadata: new PropertyMetadata(defaultValue: null));
+                typeMetadata: new PropertyMetadata(
+                    defaultValue: null,
+                    propertyChangedCallback: OnCanvasInteractionPropertyChanged));
+
+        /// <summary>
+        /// Called when <see cref="CanvasInteractionsProperty"/> has changed
+        /// </summary>
+        /// <param name="obj">Sender</param>
+        /// <param name="args">Event args</param>
+        private static void OnCanvasInteractionPropertyChanged(
+            DependencyObject obj,
+            DependencyPropertyChangedEventArgs args)
+        {
+            if (args.OldValue is Canvas2DInteractions ci)
+                ci.Dispose();
+        }
         
         #endregion
 

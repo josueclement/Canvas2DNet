@@ -1,90 +1,107 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 
-namespace Canvas2DNet.Interactions
+namespace Canvas2DNet.Interactions;
+
+/// <summary>
+/// Default interactions for <see cref="Canvas2D"/>
+/// </summary>
+public class StandardInteractions : Canvas2DInteractions
 {
     /// <summary>
-    /// Default interactions for <see cref="Canvas2D"/>
+    /// Moving object
     /// </summary>
-    public class StandardInteractions : Canvas2DInteractions
+    private DrawingObject? _movingObject;
+
+    /// <summary>
+    /// Moving position
+    /// </summary>
+    private Point _movingPosition;
+
+    /// <summary>
+    /// Object under the mouse cursor
+    /// </summary>
+    private DrawingObject? _mouseOverObject;
+
+    /// <inheritdoc/>
+    public override void OnMouseDown(Canvas2D canvas, MouseButtonEventArgs args)
     {
-        /// <summary>
-        /// Moving object
-        /// </summary>
-        private DrawingObject? _movingObject;
+        if (Disposed)
+            return;
+        
+        Point mousePosition = args.GetPosition(canvas);
+        DrawingObject? drawingObject = HitTestDataContext(canvas, mousePosition);
 
-        /// <summary>
-        /// Moving position
-        /// </summary>
-        private Point _movingPosition;
-
-        /// <summary>
-        /// Object under the mouse cursor
-        /// </summary>
-        private DrawingObject? _mouseOverObject;
-
-        /// <inheritdoc/>
-        public override void OnMouseDown(Canvas2D canvas, MouseButtonEventArgs args)
+        if (args.ChangedButton == MouseButton.Left && drawingObject != null)
         {
-            Point mousePosition = args.GetPosition(canvas);
-            DrawingObject? drawingObject = HitTestDataContext(canvas, mousePosition);
+            _movingObject = drawingObject;
+            _movingPosition = mousePosition;
+            _movingObject.RaiseClicked(mousePosition);
+        }
+    }
 
-            if (args.ChangedButton == MouseButton.Left && drawingObject != null)
-            {
-                _movingObject = drawingObject;
-                _movingPosition = mousePosition;
-                _movingObject.RaiseClicked(mousePosition);
-            }
+    /// <inheritdoc/>
+    public override void OnMouseUp(Canvas2D canvas, MouseButtonEventArgs args)
+    {
+        if (Disposed)
+            return;
+        
+        Point mousePosition = args.GetPosition(canvas);
+
+        if (args.ChangedButton == MouseButton.Left && _movingObject != null)
+        {
+            _movingObject.RaiseMoved(mousePosition, mousePosition - _movingPosition);
+            _movingObject = null;
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void OnMouseMove(Canvas2D canvas, MouseEventArgs args)
+    {
+        if (Disposed)
+            return;
+        
+        Point mousePosition = args.GetPosition(canvas);
+        if (_movingObject != null)
+        {
+            _movingObject.RaiseMoving(mousePosition, mousePosition - _movingPosition);
+            _movingPosition = mousePosition;
+            return;
         }
 
-        /// <inheritdoc/>
-        public override void OnMouseUp(Canvas2D canvas, MouseButtonEventArgs args)
-        {
-            Point mousePosition = args.GetPosition(canvas);
+        DrawingObject? drawingObject = HitTestDataContext(canvas, mousePosition);
 
-            if (args.ChangedButton == MouseButton.Left && _movingObject != null)
-            {
-                _movingObject.RaiseMoved(mousePosition, mousePosition - _movingPosition);
-                _movingObject = null;
-            }
+        if (_mouseOverObject == null && drawingObject != null)
+        {
+            _mouseOverObject = drawingObject;
+            _mouseOverObject.RaiseMouseEnter();
         }
-
-        /// <inheritdoc/>
-        public override void OnMouseMove(Canvas2D canvas, MouseEventArgs args)
+        else if (_mouseOverObject != null)
         {
-            Point mousePosition = args.GetPosition(canvas);
-            if (_movingObject != null)
+            if (drawingObject == null)
             {
-                _movingObject.RaiseMoving(mousePosition, mousePosition - _movingPosition);
-                _movingPosition = mousePosition;
-                return;
+                _mouseOverObject.RaiseMouseLeave();
+                _mouseOverObject = null;
             }
-
-            DrawingObject? drawingObject = HitTestDataContext(canvas, mousePosition);
-
-            if (_mouseOverObject == null && drawingObject != null)
+            else if (_mouseOverObject != drawingObject)
             {
+                _mouseOverObject.RaiseMouseLeave();
                 _mouseOverObject = drawingObject;
                 _mouseOverObject.RaiseMouseEnter();
             }
-            else if (_mouseOverObject != null)
+            else
             {
-                if (drawingObject == null)
-                {
-                    _mouseOverObject.RaiseMouseLeave();
-                    _mouseOverObject = null;
-                }
-                else if (_mouseOverObject != drawingObject)
-                {
-                    _mouseOverObject.RaiseMouseLeave();
-                    _mouseOverObject = drawingObject;
-                    _mouseOverObject.RaiseMouseEnter();
-                }
-                else
-                {
-                    _mouseOverObject.RaiseMouseMovingOver(mousePosition);
-                }
+                _mouseOverObject.RaiseMouseMovingOver(mousePosition);
             }
         }
+    }
+
+    /// <inheritdoc />
+    public override void Dispose()
+    {
+        _movingObject = null;
+        _mouseOverObject = null;
+
+        Disposed = true;
     }
 }

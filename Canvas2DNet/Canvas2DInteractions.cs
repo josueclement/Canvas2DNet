@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using System.Windows;
 using System.Windows.Media;
 
@@ -7,8 +8,13 @@ namespace Canvas2DNet
     /// <summary>
     /// Base interactions for <see cref="Canvas2D"/>
     /// </summary>
-    public abstract class Canvas2DInteractions
+    public abstract class Canvas2DInteractions : IDisposable
     {
+        /// <summary>
+        /// Is the object disposed
+        /// </summary>
+        protected bool Disposed { get;  set; }
+        
         /// <summary>
         /// Invoked when a MouseDown event is raised
         /// </summary>
@@ -168,6 +174,12 @@ namespace Canvas2DNet
             if (obj != null && obj is FrameworkElement element && element.DataContext is DrawingObject drawingObj)
                 return drawingObj;
             return null;
+        }
+
+        /// <inheritdoc/>
+        public virtual void Dispose()
+        {
+            
         }
 
         // private List<DependencyObject> _hitTestObjects = new List<DependencyObject>();
